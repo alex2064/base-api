@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: base-api
+  profiles:
+    active: local
+server:
+  port: 8080
+  shutdown: graceful

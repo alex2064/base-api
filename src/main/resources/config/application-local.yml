@@ -1,0 +1,68 @@
+# === Spring ===
+spring:
+  # === mariadb ===
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/dev?autoReconnect=true&useSSL=false
+    username: kim
+    password: kim123
+    hikari:
+      auto-commit: false
+      idle-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      pool-name: basedbcp
+  # === jpa ===
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+#    properties:
+#      hibernate:
+#        show_sql: false
+#        format_sql: true
+#        highlight_sql: true
+  # === openfeign ===
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 5000
+            readTimeout: 10000
+            loggerLevel: full
+          CALL-API:
+            connectTimeout: 5000
+            readTimeout: 60000
+  pid:
+    file: ./pid/base-api.pid
+
+# === Swagger ===
+springdoc:
+  api-docs:
+    enabled: false
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    doc-expansion: none
+    groups-order: desc
+    operations-sorter: method
+    enabled: false
+  show-actuator: true
+  paths-to-match:
+    - /**
+
+# === Logging ===
+logging:
+  pattern:
+    console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
+  level:
+    root: info
+    sql: debug
+    web: info
+#    org:
+#      hibernate:
+#        SQL: debug
+#        type.descriptor.sql: trace
