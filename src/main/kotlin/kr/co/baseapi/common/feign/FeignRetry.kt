@@ -7,7 +7,7 @@ import feign.Retryer
 import feign.codec.ErrorDecoder
 import org.springframework.context.annotation.Bean
 
-class FeignRetryConfig : FeignLoggerConfig() {
+class FeignRetry : FeignLogger() {
 
     @Bean
     fun retryer(): Retryer = Retryer.Default(2_000L, 3_000L, 3)

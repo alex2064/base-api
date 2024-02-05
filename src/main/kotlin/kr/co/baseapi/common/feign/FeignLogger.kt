@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets
 
 private val log = KotlinLogging.logger {}
 
-open class FeignLoggerConfig : Logger() {
+open class FeignLogger : Logger() {
 
     override fun logRequest(configKey: String?, logLevel: Level?, request: Request?) {
         super.logRequest(configKey, logLevel, request)

@@ -55,8 +55,6 @@ dependencies {
     // === Logging ===
     implementation("io.github.microutils:kotlin-logging:3.0.5")
 
-
-
     // === Test ===
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
