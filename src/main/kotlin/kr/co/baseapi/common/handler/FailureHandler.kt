@@ -17,16 +17,18 @@ class FailureHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected fun methodArgumentNotValidException(
+    fun methodArgumentNotValidException(
         ex: MethodArgumentNotValidException,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): BaseResponse<ProblemDetail> {
-        val errors = mutableMapOf<String, String>()
+
+        val errors: MutableMap<String, String> = mutableMapOf()
         ex.bindingResult.allErrors.forEach { error ->
             val fieldName = (error as FieldError).field
             val errorMessage = error.getDefaultMessage()
             errors[fieldName] = errorMessage ?: "Not Exception Message"
         }
+
         val problemDetail: ProblemDetail = ex.body
         problemDetail.setProperty("fieldErrors", errors)
 
@@ -40,13 +42,16 @@ class FailureHandler {
         )
     }
 
+
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected fun defaultException(
+    fun defaultException(
         ex: MethodArgumentNotValidException,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): BaseResponse<ProblemDetail> {
-        val errors = mapOf("미처리 에러" to (ex.message ?: "Not Exception Message"))
+
+        val errors: Map<String, String> = mapOf("미처리 에러" to (ex.message ?: "Not Exception Message"))
+
         val problemDetail: ProblemDetail = ex.body
         problemDetail.setProperty("fieldErrors", errors)
 

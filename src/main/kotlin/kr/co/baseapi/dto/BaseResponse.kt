@@ -9,14 +9,14 @@ data class BaseResponse<T>(
     val endTime: LocalDateTime = LocalDateTime.now(),
     val method: String,
     val path: String,
-    val data: T? = null,
+    val data: T,
 ) {
     companion object {
         fun <T> successOf(
             data: T,
-            beginTime: LocalDateTime? = null,
+            beginTime: LocalDateTime?,
             method: String,
-            path: String
+            path: String,
         ): BaseResponse<T> = BaseResponse(
             isSuccess = true,
             beginTime = beginTime,
@@ -27,9 +27,9 @@ data class BaseResponse<T>(
 
         fun failureOf(
             problemDetail: ProblemDetail,
-            beginTime: LocalDateTime? = null,
+            beginTime: LocalDateTime?,
             method: String,
-            path: String
+            path: String,
         ): BaseResponse<ProblemDetail> = BaseResponse(
             isSuccess = false,
             beginTime = beginTime,

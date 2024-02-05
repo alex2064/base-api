@@ -57,7 +57,7 @@ springdoc:
 # === Logging ===
 logging:
   pattern:
-    console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%-15thread][%-36logger{36}.%-20method:%-4line] - %msg%n"
   level:
     root: info
     sql: debug
