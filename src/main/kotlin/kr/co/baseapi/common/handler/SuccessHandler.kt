@@ -17,7 +17,10 @@ import java.time.LocalDateTime
 class SuccessHandler : ResponseBodyAdvice<Any> {
 
     override fun supports(returnType: MethodParameter, converterType: Class<out HttpMessageConverter<*>>): Boolean {
-        return true
+        val excludeMethods: List<String> = listOf("methodName")
+        val methodName: String = returnType.method?.name ?: ""
+
+        return !((methodName in excludeMethods) || (BaseResponse::class.java.isAssignableFrom(returnType.parameterType)))
     }
 
     override fun beforeBodyWrite(
@@ -27,11 +30,7 @@ class SuccessHandler : ResponseBodyAdvice<Any> {
         selectedConverterType: Class<out HttpMessageConverter<*>>,
         request: ServerHttpRequest,
         response: ServerHttpResponse
-    ): Any {
-        if (body is BaseResponse<*>) {
-            return body
-        }
-
+    ): Any? {
         val attributes: ServletRequestAttributes =
             RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes
         val httpRequest: HttpServletRequest = attributes.request

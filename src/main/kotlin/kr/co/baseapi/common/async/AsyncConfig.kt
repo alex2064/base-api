@@ -25,7 +25,6 @@ class AsyncConfig : AsyncConfigurer {
                 setRejectedExecutionHandler(ThreadPoolExecutor.DiscardPolicy())
                 initialize()
             }
-
         return executor
     }
 
@@ -44,7 +43,6 @@ class AsyncConfig : AsyncConfigurer {
                 setRejectedExecutionHandler(ThreadPoolExecutor.DiscardPolicy())
                 initialize()
             }
-
         return executor
     }
 }

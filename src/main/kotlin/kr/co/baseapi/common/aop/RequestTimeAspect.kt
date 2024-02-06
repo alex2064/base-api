@@ -29,7 +29,6 @@ class RequestTimeAspect {
         val attributes: ServletRequestAttributes =
             RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes
         val httpRequest: HttpServletRequest = attributes.request
-
         val beginTime: LocalDateTime = LocalDateTime.now()
         httpRequest.setAttribute("beginTime", beginTime)
 
