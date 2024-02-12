@@ -59,11 +59,11 @@ springdoc:
     enabled: true
     path: /v3/api-docs
   swagger-ui:
+    enabled: true
     path: /swagger-ui.html
     doc-expansion: none
     groups-order: desc
     operations-sorter: method
-    enabled: false
   show-actuator: true
   paths-to-match:
     - /**
