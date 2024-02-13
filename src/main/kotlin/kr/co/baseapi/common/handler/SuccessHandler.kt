@@ -1,7 +1,7 @@
 package kr.co.baseapi.common.handler
 
 import jakarta.servlet.http.HttpServletRequest
-import kr.co.baseapi.dto.BaseResponse
+import kr.co.baseapi.common.handler.dto.BaseResponse
 import org.springframework.core.MethodParameter
 import org.springframework.http.MediaType
 import org.springframework.http.converter.HttpMessageConverter

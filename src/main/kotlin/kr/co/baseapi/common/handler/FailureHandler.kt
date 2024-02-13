@@ -1,7 +1,7 @@
 package kr.co.baseapi.common.handler
 
 import jakarta.servlet.http.HttpServletRequest
-import kr.co.baseapi.dto.BaseResponse
+import kr.co.baseapi.common.handler.dto.BaseResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
 import org.springframework.validation.FieldError
@@ -24,8 +24,7 @@ class FailureHandler {
         val errors: MutableMap<String, String> = mutableMapOf()
         for (error in ex.bindingResult.allErrors) {
             val fieldName = (error as FieldError).field
-            val errorMessage = error.getDefaultMessage()
-            errors[fieldName] = errorMessage ?: "Not Exception Message"
+            errors[fieldName] = error.getDefaultMessage() ?: "Not Exception Message"
         }
 
         val problemDetail: ProblemDetail = ex.body

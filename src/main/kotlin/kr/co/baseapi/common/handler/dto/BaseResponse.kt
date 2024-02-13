@@ -1,4 +1,4 @@
-package kr.co.baseapi.dto
+package kr.co.baseapi.common.handler.dto
 
 import org.springframework.http.ProblemDetail
 import java.time.LocalDateTime

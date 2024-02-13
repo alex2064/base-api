@@ -1,4 +1,4 @@
-package kr.co.baseapi.common.swagger.annotation
+package kr.co.baseapi.common.swagger
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)

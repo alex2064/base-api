@@ -45,7 +45,7 @@ open class FeignLogger : Logger() {
                     log.info {
                         """
                         [Feign Response] 
-                        Status:${response.status()}
+                        Status: ${response.status()}
                         Body: $body
                         """.trimIndent()
                     }
