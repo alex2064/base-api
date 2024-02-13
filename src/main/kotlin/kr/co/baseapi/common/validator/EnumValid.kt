@@ -17,17 +17,27 @@ annotation class EnumValid(
     val enumClass: KClass<out Enum<*>>
 )
 
-class EnumValidator : ConstraintValidator<EnumValid, String> {
+class EnumValidator : ConstraintValidator<EnumValid, Any> {
     private lateinit var enums: Array<out Enum<*>>
 
     override fun initialize(annotation: EnumValid) {
         enums = annotation.enumClass.java.enumConstants
     }
 
-    override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean {
-        if (value == null) {
-            return true
+    override fun isValid(value: Any?, context: ConstraintValidatorContext?): Boolean {
+        val isValid: Boolean = when (value) {
+            null -> false
+            is Enum<*> -> enums.any { it.name == value.name }
+            is String -> enums.any { it.name == value }
+            else -> false
         }
-        return enums.any { it.name == value }
+
+        if (!isValid && context != null) {
+            context.disableDefaultConstraintViolation()
+            context.buildConstraintViolationWithTemplate("유효하지 않은 값입니다. 가능한 값은 [${enums.joinToString { it.name }}] 중 하나여야 합니다.")
+                .addConstraintViolation()
+        }
+
+        return isValid
     }
 }
