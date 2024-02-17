@@ -18,6 +18,7 @@ open class FeignLogger : Logger() {
             val body: String = request?.body()?.let { String(request.body(), StandardCharsets.UTF_8) } ?: ""
             log.info {
                 """
+                
                 [Feign Request] 
                 URI: ${request?.url()}
                 Method: ${request?.httpMethod()}
@@ -44,7 +45,8 @@ open class FeignLogger : Logger() {
                     val body: String = String(bytes, StandardCharsets.UTF_8)
                     log.info {
                         """
-                        [Feign Response] 
+                        
+                        [Feign Response]
                         Status: ${response.status()}
                         Body: $body
                         """.trimIndent()

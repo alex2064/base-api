@@ -32,7 +32,7 @@ class RequestTimeAspect {
         httpRequest.setAttribute("beginTime", beginTime)
 
         log.info {
-            "[Http Request] Method: ${httpRequest.method}, Path: ${httpRequest.requestURI}"
+            "[Http Request] | Method: ${httpRequest.method} | Path: ${httpRequest.requestURI}"
         }
 
         try {
@@ -41,11 +41,7 @@ class RequestTimeAspect {
             val endTime: LocalDateTime = LocalDateTime.now()
             val duration: Duration = Duration.between(beginTime, endTime)
             log.info {
-                """
-                [Http Request] - ${duration.toMillis()} ms 
-                Method: ${httpRequest.method}
-                Path: ${httpRequest.requestURI}
-                """.trimIndent()
+                "[Http Response] | Method: ${httpRequest.method} | Path: ${httpRequest.requestURI} | duration: ${duration.toMillis()} ms"
             }
         }
     }

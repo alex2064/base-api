@@ -12,6 +12,7 @@ class AsyncExceptionHandler : AsyncUncaughtExceptionHandler {
         val paramsStr: String = params.joinToString(separator = "/") { it.toString() }
         log.error {
             """
+            
             Async error caught: ${ex.message} 
             Method: ${method.declaringClass.name}.${method.name}
             params: $paramsStr

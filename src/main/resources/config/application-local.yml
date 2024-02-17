@@ -18,12 +18,8 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: none
-    show-sql: true
     properties:
       hibernate:
-        show_sql: false
-        format_sql: true
-        highlight_sql: true
         order_inserts: true
         order_updates: true
         default_batch_fetch_size: 100
@@ -35,12 +31,6 @@ spring:
         persistence:
           sharedCache:
             mode: ENABLE_SELECTIVE
-
-#    properties:
-#      hibernate:
-#        show_sql: false
-#        format_sql: true
-#        highlight_sql: true
   # === openfeign ===
   cloud:
     openfeign:
@@ -77,9 +67,11 @@ logging:
     console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%-15thread][%-36logger{36}.%-20method:%-4line] - %msg%n"
   level:
     root: info
-    sql: debug
+    sql: info
     web: info
-    org:
-      hibernate:
-        SQL: debug
-        type.descriptor.sql: trace
+
+# === p6spy ===
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true

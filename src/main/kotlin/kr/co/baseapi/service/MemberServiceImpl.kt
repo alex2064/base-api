@@ -24,7 +24,7 @@ class MemberServiceImpl(
 //        member.name = "park"
 
         val member: Member? = memberRepository.findById(1L).getOrNull()
-        member?.name = "park1"
+        member?.addAge(1)
 
         return true
     }

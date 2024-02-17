@@ -34,4 +34,10 @@ class Member(
         fun of(name: String?, age: Int?, gender: GenderType?, isAuth: Boolean?): Member =
             Member(name = name, age = age, gender = gender, isAuth = isAuth)
     }
+
+    fun addAge(value: Int) {
+        if (age != null) {
+            age = age!! + value
+        }
+    }
 }
