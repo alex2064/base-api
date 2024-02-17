@@ -25,12 +25,15 @@ class RequestTimeAspect {
     @Around("controllerPointcut()")
     @Throws(Throwable::class)
     fun logRequestTime(joinPoint: ProceedingJoinPoint): Any? {
-
         val attributes: ServletRequestAttributes =
             RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes
         val httpRequest: HttpServletRequest = attributes.request
         val beginTime: LocalDateTime = LocalDateTime.now()
         httpRequest.setAttribute("beginTime", beginTime)
+
+        log.info {
+            "[Http Request] Method: ${httpRequest.method}, Path: ${httpRequest.requestURI}"
+        }
 
         try {
             return joinPoint.proceed()

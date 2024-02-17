@@ -18,3 +18,11 @@ enum class ExamType(
         fun get(name: String?): ExamType? = EnumUtil.getEnumByNameOrCode(ExamType::class.java, name)
     }
 }
+
+enum class GenderType(
+    override val code: String,
+    override val desc: String
+) : ConvertType {
+    MAN("man", "남자"),
+    WOMAN("woman", "여자");
+}

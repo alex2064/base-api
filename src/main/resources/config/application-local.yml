@@ -21,6 +21,9 @@ spring:
     show-sql: true
     properties:
       hibernate:
+        show_sql: false
+        format_sql: true
+        highlight_sql: true
         order_inserts: true
         order_updates: true
         default_batch_fetch_size: 100
@@ -76,7 +79,7 @@ logging:
     root: info
     sql: debug
     web: info
-#    org:
-#      hibernate:
-#        SQL: debug
-#        type.descriptor.sql: trace
+    org:
+      hibernate:
+        SQL: debug
+        type.descriptor.sql: trace
