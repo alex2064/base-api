@@ -23,10 +23,10 @@ spring:
         order_inserts: true
         order_updates: true
         default_batch_fetch_size: 100
-        jdbc:
-          batch_size: 50
-          batch_versioned_data: true
-          generate_statistics: true
+#        jdbc:
+#          batch_size: 50
+#          batch_versioned_data: true
+#          generate_statistics: true
       javax:
         persistence:
           sharedCache:
