@@ -8,12 +8,12 @@ private val log = KotlinLogging.logger {}
 
 class AsyncExceptionHandler : AsyncUncaughtExceptionHandler {
 
-    override fun handleUncaughtException(ex: Throwable, method: Method, vararg params: Any?) {
+    override fun handleUncaughtException(e: Throwable, method: Method, vararg params: Any?) {
         val paramsStr: String = params.joinToString(separator = "/") { it.toString() }
         log.error {
             """
             
-            Async error caught: ${ex.message} 
+            Async error caught: ${e.message} 
             Method: ${method.declaringClass.name}.${method.name}
             params: $paramsStr
             """.trimIndent()

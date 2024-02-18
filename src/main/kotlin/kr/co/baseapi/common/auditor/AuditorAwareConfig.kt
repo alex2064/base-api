@@ -5,7 +5,7 @@ import org.springframework.data.domain.AuditorAware
 import java.util.*
 
 @Configuration
-class AuditorAwareImpl : AuditorAware<Long> {
+class AuditorAwareConfig : AuditorAware<Long> {
     override fun getCurrentAuditor(): Optional<Long> {
         return Optional.of(100L)    // 작업자의 User Id
     }
