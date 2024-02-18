@@ -26,20 +26,23 @@ class SqlFormatConfig : MessageFormattingStrategy {
         sql: String?,
         url: String?
     ): String {
-        return "[$category] | $elapsed ms | ${formatSql(category, sql)}"
+        return when (category) {
+            Category.STATEMENT.name -> "[$category] | $elapsed ms | ${formatSql(sql)}"
+            else -> "[$category] | $elapsed ms"
+        }
     }
 
-    private fun formatSql(category: String?, sql: String?): String? {
-        if (sql != null && sql.trim().isNotEmpty() && Category.STATEMENT.name.equals(category)) {
-            val trim: String = sql.trim().lowercase(Locale.ROOT)
-            return if (trim.startsWith("create") || trim.startsWith("alter") || trim.startsWith("comment")) {
-                FormatStyle.DDL.formatter.format(sql)
-            } else {
-                FormatStyle.BASIC.formatter.format(sql)
-            }
-        }
+    private fun formatSql(sql: String?): String? {
+        val temp: String = sql?.trim()?.lowercase(Locale.ROOT) ?: ""
+        return when {
+            temp == "" -> sql
 
-        return sql
+            (temp.startsWith("create") ||
+                    temp.startsWith("alter") ||
+                    temp.startsWith("comment")) -> FormatStyle.DDL.formatter.format(sql)
+
+            else -> FormatStyle.BASIC.formatter.format(sql)
+        }
     }
 
     private fun stackTrace(): String {

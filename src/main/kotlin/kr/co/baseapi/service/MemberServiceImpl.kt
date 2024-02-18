@@ -23,7 +23,7 @@ class MemberServiceImpl(
 //        Thread.sleep(10_000L)
 //        member.name = "park"
 
-        val member: Member? = memberRepository.findById(1L).getOrNull()
+        val member: Member? = memberRepository.findById(3L).getOrNull()
         member?.addAge(1)
 
         return true
