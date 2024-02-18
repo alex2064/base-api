@@ -7,10 +7,18 @@ import jakarta.annotation.PostConstruct
 import org.hibernate.engine.jdbc.internal.FormatStyle
 import org.springframework.context.annotation.Configuration
 import org.springframework.util.ClassUtils
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 @Configuration
 class SqlFormatConfig : MessageFormattingStrategy {
+
+    private val iso8601Pattern: Pattern = Pattern.compile(
+        "\\b(\\d{4}-\\d{2}-\\d{2})T(\\d{2}:\\d{2}:\\d{2})\\.\\d{3}\\+\\d{4}\\b"
+    )
 
     @PostConstruct
     fun setLogMessageFormat() {
@@ -41,7 +49,29 @@ class SqlFormatConfig : MessageFormattingStrategy {
                     temp.startsWith("alter") ||
                     temp.startsWith("comment")) -> FormatStyle.DDL.formatter.format(sql)
 
-            else -> FormatStyle.BASIC.formatter.format(sql)
+            else -> {
+                val sb: StringBuilder = StringBuilder()
+                val matcher: Matcher = iso8601Pattern.matcher(sql.toString())
+                while (matcher.find()) {
+                    val isoDate: String = matcher.group(0)
+                    val convertDate: String = convertIsoDateString(isoDate)
+                    matcher.appendReplacement(sb, convertDate)
+                }
+                matcher.appendTail(sb)
+
+                FormatStyle.BASIC.formatter.format(sb.toString())
+            }
+        }
+    }
+
+    private fun convertIsoDateString(isoDate: String): String {
+        val zonedDateTime: ZonedDateTime =
+            ZonedDateTime.parse(isoDate, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"))
+
+        return if ((zonedDateTime.hour + zonedDateTime.minute + zonedDateTime.second) == 0) {
+            zonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        } else {
+            zonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         }
     }
 
