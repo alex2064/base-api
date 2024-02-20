@@ -4,6 +4,7 @@ plugins {
     val kotlinVersion: String = "1.9.22"
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
+    id("com.ewerk.gradle.plugins.querydsl") version "1.0.10"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.jpa") version kotlinVersion
@@ -39,6 +40,12 @@ dependencies {
     // === Kotlin ===
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    // === Querydsl ===
+    implementation("com.querydsl:querydsl-jpa:5.1.0:jakarta")
+    kapt("com.querydsl:querydsl-apt:5.1.0:jakarta")
+    kapt("jakarta.persistence:jakarta.persistence-api")
+    kapt("jakarta.annotation:jakarta.annotation-api")
 
     // === mariadb ===
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
@@ -78,6 +85,7 @@ dependencyManagement {
     }
 }
 
+
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
@@ -87,4 +95,9 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = "src/main/generated"
 }
