@@ -35,7 +35,7 @@ class MemberRepositorySupportImpl(
 
         // 공통 query
         val booleanBuilder: BooleanBuilder = BooleanBuilder()
-            .and(member.age.goe(20))
+            .and(member.isAuth.eq(true))
 
         val query: JPAQuery<Member> = jpaQueryFactory.selectFrom(member).where(booleanBuilder)
 
