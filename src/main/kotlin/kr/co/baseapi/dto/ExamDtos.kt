@@ -12,7 +12,7 @@ import java.math.BigDecimal
 import java.time.LocalDate
 
 
-// Spring validation 사용(기본 null 허용으로 만들기)
+// Spring validation 사용(기본 생성자 + val + null 허용으로 만들기)
 data class ExamParam(
 
     // String 타입 : @NotBlank
@@ -87,6 +87,12 @@ data class ExamParam(
     val emailNotBlankEmailValid: String?,
 
 
-    @Schema(description = "ID")
+    @field:Schema(description = "ID")
     val id: Long?
 )
+
+
+data class ExamPage(
+    @field:Schema(description = "검색어")
+    val keyword: String?
+) : PageParam()
