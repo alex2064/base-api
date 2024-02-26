@@ -18,31 +18,31 @@ private val log = KotlinLogging.logger {}
 @Component
 class RequestTimeAspect {
 
-    @Pointcut("execution(* kr.co.baseapi.controller.*Controller.*(..))")
-    fun controllerPointcut() {
-    }
-
-    @Around("controllerPointcut()")
-    @Throws(Throwable::class)
-    fun logRequestTime(joinPoint: ProceedingJoinPoint): Any? {
-        val attributes: ServletRequestAttributes =
-            RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes
-        val httpRequest: HttpServletRequest = attributes.request
-        val beginTime: LocalDateTime = LocalDateTime.now()
-        httpRequest.setAttribute("beginTime", beginTime)
-
-        log.info {
-            "[Http Request] | Method: ${httpRequest.method} | Path: ${httpRequest.requestURI}"
-        }
-
-        try {
-            return joinPoint.proceed()
-        } finally {
-            val endTime: LocalDateTime = LocalDateTime.now()
-            val duration: Duration = Duration.between(beginTime, endTime)
-            log.info {
-                "[Http Response] | Method: ${httpRequest.method} | Path: ${httpRequest.requestURI} | duration: ${duration.toMillis()} ms"
-            }
-        }
-    }
+//    @Pointcut("execution(* kr.co.baseapi.controller.*Controller.*(..))")
+//    fun controllerPointcut() {
+//    }
+//
+//    @Around("controllerPointcut()")
+//    @Throws(Throwable::class)
+//    fun logRequestTime(joinPoint: ProceedingJoinPoint): Any? {
+//        val attributes: ServletRequestAttributes =
+//            RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes
+//        val httpRequest: HttpServletRequest = attributes.request
+//        val beginTime: LocalDateTime = LocalDateTime.now()
+//        httpRequest.setAttribute("beginTime", beginTime)
+//
+//        log.info {
+//            "[Http Request] | Method: ${httpRequest.method} | Path: ${httpRequest.requestURI}"
+//        }
+//
+//        try {
+//            return joinPoint.proceed()
+//        } finally {
+//            val endTime: LocalDateTime = LocalDateTime.now()
+//            val duration: Duration = Duration.between(beginTime, endTime)
+//            log.info {
+//                "[Http Response] | Method: ${httpRequest.method} | Path: ${httpRequest.requestURI} | duration: ${duration.toMillis()} ms"
+//            }
+//        }
+//    }
 }

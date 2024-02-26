@@ -30,7 +30,7 @@ class FailureHandler {
         val problemDetail: ProblemDetail = e.body
         problemDetail.setProperty("fieldErrors", errors)
 
-        val beginTime: LocalDateTime? = request.getAttribute("beginTime") as? LocalDateTime
+        val beginTime: LocalDateTime = request.getAttribute("beginTime") as LocalDateTime
 
         return BaseResponse.failureOf(
             problemDetail = problemDetail,
@@ -50,7 +50,7 @@ class FailureHandler {
         val problemDetail: ProblemDetail =
             ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, (e.message ?: "Not Exception Message"))
 
-        val beginTime: LocalDateTime? = request.getAttribute("beginTime") as? LocalDateTime
+        val beginTime: LocalDateTime = request.getAttribute("beginTime") as LocalDateTime
 
         return BaseResponse.failureOf(
             problemDetail = problemDetail,

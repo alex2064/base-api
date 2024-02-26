@@ -34,7 +34,7 @@ class SuccessHandler : ResponseBodyAdvice<Any> {
         val attributes: ServletRequestAttributes =
             RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes
         val httpRequest: HttpServletRequest = attributes.request
-        val beginTime: LocalDateTime? = httpRequest.getAttribute("beginTime") as? LocalDateTime
+        val beginTime: LocalDateTime = httpRequest.getAttribute("beginTime") as LocalDateTime
 
         return BaseResponse.successOf(
             data = body,

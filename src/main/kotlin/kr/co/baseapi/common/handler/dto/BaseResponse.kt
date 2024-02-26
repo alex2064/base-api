@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 data class BaseResponse<T>(
     val isSuccess: Boolean = false,
-    val beginTime: LocalDateTime? = null,
+    val beginTime: LocalDateTime,
     val endTime: LocalDateTime = LocalDateTime.now(),
     val method: String,
     val path: String,
@@ -14,7 +14,7 @@ data class BaseResponse<T>(
     companion object {
         fun <T> successOf(
             data: T,
-            beginTime: LocalDateTime?,
+            beginTime: LocalDateTime,
             method: String,
             path: String
         ): BaseResponse<T> = BaseResponse(
@@ -27,7 +27,7 @@ data class BaseResponse<T>(
 
         fun failureOf(
             problemDetail: ProblemDetail,
-            beginTime: LocalDateTime?,
+            beginTime: LocalDateTime,
             method: String,
             path: String
         ): BaseResponse<ProblemDetail> = BaseResponse(
