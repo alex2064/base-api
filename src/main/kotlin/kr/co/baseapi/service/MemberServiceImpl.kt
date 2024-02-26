@@ -1,5 +1,6 @@
 package kr.co.baseapi.service
 
+import kr.co.baseapi.dto.PageResult
 import kr.co.baseapi.entity.Member
 import kr.co.baseapi.enums.GenderType
 import kr.co.baseapi.repository.MemberRepository
@@ -36,8 +37,18 @@ class MemberServiceImpl(
 
         val pageable: Pageable = PageRequest.of(0, 10)
         val pageImpl: PageImpl<Member> = memberRepositorySupport.findDslPage(pageable)
+        val result = PageResult.pageOf(pageImpl)
 
-        log.info { "pageImpl.totalPages : ${pageImpl.totalPages} ${pageImpl.number} ${pageImpl.size} ${pageImpl.content.joinToString { it.toString() }}" }
+        log.info {
+            """
+            
+            result.pageNumber: ${result.pageNumber}
+            result.pageSize: ${result.pageSize}
+            result.totalPages: ${result.totalPages}
+            result.totalCount: ${result.totalCount}
+            result.list: ${result.list.joinToString(separator = "|") { it.toString() }}
+            """.trimIndent()
+        }
 
         return true
     }
