@@ -20,12 +20,20 @@ class PageResult<T> private constructor(
     val list: List<T>
 ) {
     companion object {
-        fun <T> of(page: Page<T>): PageResult<T> = PageResult(
+        fun <T> pageOf(page: Page<T>): PageResult<T> = PageResult(
             pageNumber = page.number,
             pageSize = page.size,
             totalPages = page.totalPages,
             totalCount = page.totalElements,
             list = page.content
+        )
+
+        fun <T> listOf(list: List<T>): PageResult<T> = PageResult(
+            pageNumber = 0,
+            pageSize = 0,
+            totalPages = 0,
+            totalCount = list.size.toLong(),
+            list = list
         )
     }
 }
