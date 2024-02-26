@@ -1,10 +1,6 @@
 package kr.co.baseapi.entity
 
 import jakarta.persistence.*
-import kr.co.baseapi.entity.converter.GenderTypeConverter
-import kr.co.baseapi.enums.GenderType
-import org.hibernate.type.YesNoConverter
-import java.time.LocalDate
 
 @Entity
 @Table(schema = "dev", name = "CHILD")
