@@ -73,6 +73,10 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core-jvm:5.8.0")
     testImplementation("io.kotest:kotest-framework-engine-jvm:5.8.0")
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
+
+    // === Mockk ===
+    testImplementation("io.mockk:mockk-jvm:1.13.10")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
 }
 
 allOpen {
