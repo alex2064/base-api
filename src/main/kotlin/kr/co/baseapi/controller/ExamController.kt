@@ -4,8 +4,9 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import kr.co.baseapi.common.swagger.ApiForExam
-import kr.co.baseapi.dto.ExamPage
+import kr.co.baseapi.dto.ExamPageParam
 import kr.co.baseapi.dto.ExamParam
+import kr.co.baseapi.dto.ExamVaildParam
 import org.springdoc.core.annotations.ParameterObject
 import org.springframework.web.bind.annotation.*
 
@@ -15,23 +16,23 @@ import org.springframework.web.bind.annotation.*
 class ExamController {
 
     @ApiForExam
-    @Operation(summary = "예시 End Point(Get)", description = "예시 End Point(Get) description")
-    @GetMapping("/validation")
-    fun examGetValid(@ParameterObject @Valid param: ExamParam): ExamParam {
+    @Operation(summary = "예시 validation(Get)", description = "예시 validation(Get) description")
+    @GetMapping("/valid")
+    fun examGetValid(@ParameterObject @Valid param: ExamVaildParam): ExamVaildParam {
         return param
     }
 
     @ApiForExam
-    @Operation(summary = "예시 End Point(Post)", description = "예시 End Point(Post) description")
-    @PostMapping("/validation")
-    fun examPostValid(@RequestBody @Valid param: ExamParam): ExamParam {
+    @Operation(summary = "예시 validation(Post)", description = "예시 validation(Post) description")
+    @PostMapping("/valid")
+    fun examPostValid(@RequestBody @Valid param: ExamVaildParam): ExamVaildParam {
         return param
     }
 
     @ApiForExam
-    @Operation(summary = "예시 페이징 호출", description = "예시 페이징 호출")
+    @Operation(summary = "예시 페이징 호출", description = "예시 페이징 호출 description")
     @GetMapping("/page")
-    fun examPage(@ParameterObject @Valid param: ExamPage): ExamPage {
+    fun examPage(@ParameterObject @Valid param: ExamPageParam): ExamPageParam {
         return param
     }
 

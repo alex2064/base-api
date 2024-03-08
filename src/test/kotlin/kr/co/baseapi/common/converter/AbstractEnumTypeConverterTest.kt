@@ -8,7 +8,8 @@ class AbstractEnumTypeConverterTest : BehaviorSpec({
     isolationMode = IsolationMode.InstancePerLeaf
 
     Given("AbstractEnumTypeConverter가 주어졌을 때") {
-        val converter = object : AbstractEnumTypeConverter<SampleEnum>(SampleEnum::class.java) {}
+        val converter: AbstractEnumTypeConverter<SampleEnum> =
+            object : AbstractEnumTypeConverter<SampleEnum>(SampleEnum::class.java) {}
 
         When("Enum을 Database에 넣는 값으로 변환하면") {
             val firstStr: String? = converter.convertToDatabaseColumn(SampleEnum.FIRST)

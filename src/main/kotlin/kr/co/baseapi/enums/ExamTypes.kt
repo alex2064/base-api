@@ -5,7 +5,7 @@ import kr.co.baseapi.common.converter.ConvertType
 import kr.co.baseapi.common.util.EnumUtil
 
 
-enum class ExamType(
+enum class GenderType(
     override val code: String,
     override val desc: String
 ) : ConvertType {
@@ -15,14 +15,6 @@ enum class ExamType(
     companion object {
         @JvmStatic
         @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-        fun get(name: String?): ExamType? = EnumUtil.getEnumByNameOrCode(ExamType::class.java, name)
+        fun get(name: String?): GenderType? = EnumUtil.getEnumByNameOrCode(GenderType::class.java, name)
     }
-}
-
-enum class GenderType(
-    override val code: String,
-    override val desc: String
-) : ConvertType {
-    MAN("man", "남자"),
-    WOMAN("woman", "여자");
 }
