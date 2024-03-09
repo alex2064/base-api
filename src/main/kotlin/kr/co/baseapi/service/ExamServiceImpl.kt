@@ -11,6 +11,12 @@ import org.springframework.transaction.annotation.Transactional
 
 private val log = KotlinLogging.logger {}
 
+/**
+ * Service 생성
+ * 1. class 단위의 @Transactional 기본 사용
+ * 2. 구현할 Service Interface와 순서 일치
+ * 3. 조회는 {find~}, 저장은 {save~}, 삭제는 {delete~}, 여러 작업 처리는 {proc~} 로 메소드명 사용
+ */
 @Transactional
 @Service
 class ExamServiceImpl(

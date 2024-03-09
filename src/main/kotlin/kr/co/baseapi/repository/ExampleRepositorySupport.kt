@@ -7,6 +7,7 @@ import java.util.*
 
 
 interface ExampleRepositorySupport {
+
     fun findById(id: Long): Optional<Example>
 
     fun findByNamePage(param: ExamPageParam): PageImpl<Example>

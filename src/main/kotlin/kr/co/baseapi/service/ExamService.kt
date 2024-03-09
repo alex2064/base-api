@@ -5,6 +5,7 @@ import kr.co.baseapi.entity.Example
 
 interface ExamService {
 
+    @Throws(Exception::class)
     fun findExample(id: Long): ExamResult
 
     fun saveExample(param: ExamParam): Boolean

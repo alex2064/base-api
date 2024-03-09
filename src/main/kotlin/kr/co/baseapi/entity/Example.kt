@@ -7,6 +7,14 @@ import org.hibernate.type.YesNoConverter
 import java.math.BigDecimal
 import java.time.LocalDate
 
+
+/**
+ * Entity 생성
+ * 1. class(var + null 허용) 로 만들기
+ * 2. 주 생성자 Private로 막고 팩토리 메서드만 사용
+ * 3. BaseEntity() 상속
+ * 4. entity 변경은 메소드 사용
+ */
 @Entity
 @Table(schema = "dev", name = "EXAMPLE")
 class Example private constructor(

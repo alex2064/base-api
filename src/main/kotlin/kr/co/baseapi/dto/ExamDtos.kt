@@ -13,7 +13,14 @@ import java.math.BigDecimal
 import java.time.LocalDate
 
 
-// Spring validation 사용(기본 생성자 + val + null 허용으로 만들기)
+/**
+ * DTO 생성
+ * 1. data class(주 생성자 + val + null 허용) 로 만들기
+ * 2. Spring validation 으로 유효성 체크
+ * 3. Request DTO는 {~Param}, Response DTO는 {~Result} 로 클래스명 생성
+ * 4. Paging 처리가 필요한 요청은 PageParam() 상속
+ * 5. 주 생성자와 팩토리 메소드 둘 다 사용
+ */
 data class ExamVaildParam(
 
     // String 타입 : @NotBlank
