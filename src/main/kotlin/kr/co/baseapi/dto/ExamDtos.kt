@@ -105,6 +105,12 @@ data class ExamPageParam(
     val name: String?
 ) : PageParam()
 
+data class ExamIdParam(
+    @field:Schema(description = "ID")
+    @field:NotNull
+    @field:Positive
+    val id: Long?
+)
 
 data class ExamParam(
     @field:Schema(description = "ID")

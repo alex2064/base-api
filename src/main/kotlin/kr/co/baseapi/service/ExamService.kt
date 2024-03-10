@@ -5,7 +5,6 @@ import kr.co.baseapi.entity.Example
 
 interface ExamService {
 
-    @Throws(Exception::class)
     fun findExample(id: Long): ExamResult
 
     fun saveExample(param: ExamParam): Boolean
@@ -20,5 +19,5 @@ interface ExamService {
 
     fun findExampleDsl(id: Long): ExamResult
 
-    fun findExampleDslPage(param: ExamPageParam): PageResult<Example>
+    fun findExampleDslPage(param: ExamPageParam): PageResult<ExamResult>
 }

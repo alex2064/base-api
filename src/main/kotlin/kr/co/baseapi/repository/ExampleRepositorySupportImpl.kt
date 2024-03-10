@@ -1,9 +1,11 @@
 package kr.co.baseapi.repository
 
 import com.querydsl.core.BooleanBuilder
+import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQuery
 import com.querydsl.jpa.impl.JPAQueryFactory
 import kr.co.baseapi.dto.ExamPageParam
+import kr.co.baseapi.dto.ExamResult
 import kr.co.baseapi.entity.Example
 import kr.co.baseapi.entity.QExample
 import org.springframework.data.domain.PageImpl
@@ -43,7 +45,7 @@ class ExampleRepositorySupportImpl(
         )
     }
 
-    override fun findByNamePage(param: ExamPageParam): PageImpl<Example> {
+    override fun findByNamePage(param: ExamPageParam): PageImpl<ExamResult> {
         // entity
         val example: QExample = QExample.example
 
@@ -59,9 +61,21 @@ class ExampleRepositorySupportImpl(
         val query: JPAQuery<Example> = jpaQueryFactory.selectFrom(example).where(booleanBuilder)
 
         // content
-        val content: MutableList<Example> =
+        val content: MutableList<ExamResult> =
             query.clone()
-                .select(example)
+                .select(
+                    Projections.constructor(
+                        ExamResult::class.java,
+                        example.id,
+                        example.name,
+                        example.age,
+                        example.amount,
+                        example.height,
+                        example.gender,
+                        example.isAuth,
+                        example.baseDate
+                    )
+                )
                 .offset(pageable.offset)
                 .limit(pageable.pageSize.toLong())
                 .fetch()
@@ -69,6 +83,6 @@ class ExampleRepositorySupportImpl(
         // total
         val total: Long = query.clone().select(example.id.count()).fetchOne() ?: 0L
 
-        return PageImpl<Example>(content, pageable, total)
+        return PageImpl<ExamResult>(content, pageable, total)
     }
 }
