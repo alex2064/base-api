@@ -10,16 +10,16 @@ import java.util.*
 class AuditorAwareConfigTest : BehaviorSpec({
     isolationMode = IsolationMode.InstancePerLeaf
 
-    Given("AuditorAwareConfig가 주어졌을 때") {
+    Given("AuditorAwareConfig가 주어지면") {
         val auditorAwareConfig: AuditorAwareConfig = AuditorAwareConfig()
 
-        When("currentAuditor메서드를 호출하면") {
+        When("currentAuditor 메서드를 확인할 때") {
             val currentAuditor: Optional<Long> = auditorAwareConfig.currentAuditor
 
-            Then("currentAuditor에 값이 존재해야한다") {
+            Then("currentAuditor에 값이 존재해야 한다.") {
                 currentAuditor.shouldBePresent()
             }
-            Then("그 값은 100L 이여야 한다") {
+            Then("그 값은 100L 이여야 한다.") {
                 currentAuditor.get() shouldBe 100L
             }
         }
