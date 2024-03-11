@@ -21,7 +21,7 @@ class AbstractEnumTypeConverterTest : BehaviorSpec({
             }
         }
 
-        When("Database에 값을 Enum으로 변환하면") {
+        When("Database의 값을 Enum으로 변환하면") {
             val firstEnum: SampleEnum? = converter.convertToEntityAttribute("first")
             val secondEnum: SampleEnum? = converter.convertToEntityAttribute("second")
 
