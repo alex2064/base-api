@@ -16,17 +16,17 @@ abstract class BaseEntity {
 
     @CreatedDate
     @Column(name = "CREATE_DATE")
-    var createDate: LocalDateTime? = null
+    protected var createDate: LocalDateTime? = null
 
     @CreatedBy
     @Column(name = "CREATE_BY")
-    var createBy: Long? = null
+    protected var createBy: Long? = null
 
     @LastModifiedDate
     @Column(name = "UPDATE_DATE")
-    var updateDate: LocalDateTime? = null
+    protected var updateDate: LocalDateTime? = null
 
     @LastModifiedBy
     @Column(name = "UPDATE_BY")
-    var updateBy: Long? = null
+    protected var updateBy: Long? = null
 }
