@@ -19,6 +19,8 @@ import java.util.*
  */
 interface ExampleRepository : JpaRepository<Example, Long> {
 
+    fun findByName(name: String): List<Example>
+
     @Modifying(clearAutomatically = true)
     @Query("update Example set isAuth = :isAuth where id in (:ids)")
     fun saveIsAuth(isAuth: Boolean, ids: List<Long>)
