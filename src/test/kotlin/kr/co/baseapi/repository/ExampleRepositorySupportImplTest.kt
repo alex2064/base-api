@@ -1,6 +1,5 @@
 package kr.co.baseapi.repository
 
-import feign.Request
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.extensions.spring.SpringTestExtension
@@ -29,19 +28,19 @@ class ExampleRepositorySupportImplTest(
     isolationMode = IsolationMode.InstancePerLeaf
     extension(SpringTestExtension(mode = SpringTestLifecycleMode.Root))
 
-    Given("Example의 ID값이 주어지면") {
+    Given("[findById] Example의 ID값이 주어지면") {
         val id: Long = 1L
 
         When("querydsl로 조회할 때") {
-            val example: Example? = exampleRepositorySupport.findById(id).orElse(null)
+            val example: Example = exampleRepositorySupport.findById(id).orElseThrow()
 
             Then("id값이 서로 같아야 한다.") {
-                example?.id shouldBe id
+                example.id shouldBe id
             }
         }
     }
 
-    Given("페이징 처리하는 ExamPageParam이 주어지면") {
+    Given("[findByNamePage] 페이징 처리하는 ExamPageParam이 주어지면") {
         val param: ExamPageParam = mockk<ExamPageParam>()
         every { param.pageable } returns PageRequest.of(0, 20)
         every { param.name } returns "kim"

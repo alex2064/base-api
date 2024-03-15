@@ -2,18 +2,15 @@ package kr.co.baseapi.entity
 
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.shouldBe
-import kr.co.baseapi.common.auditor.AuditorAwareConfig
 import kr.co.baseapi.enums.GenderType
 import java.math.BigDecimal
 import java.time.LocalDate
-import java.util.*
 
 class ExampleTest : BehaviorSpec({
     isolationMode = IsolationMode.InstancePerLeaf
 
-    Given("Example 엔티티 생성할 값이 주어지면") {
+    Given("[of] Example 엔티티 생성할 값이 주어지면") {
         val name: String = "kim"
         val age: Int = 35
         val amount: Long = 10_000L
@@ -37,7 +34,7 @@ class ExampleTest : BehaviorSpec({
         }
     }
 
-    Given("Example 엔티티와 수정할 값이 주어지면") {
+    Given("[updateInfo] Example 엔티티와 수정할 값이 주어지면") {
         val example: Example = Example.of(null, null, null, null, null, null, null)
         val name: String = "kim"
         val age: Int = 35
