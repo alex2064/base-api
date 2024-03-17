@@ -5,6 +5,7 @@ import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
+import io.mockk.mockk
 import kr.co.baseapi.dto.*
 import kr.co.baseapi.entity.Example
 import kr.co.baseapi.enums.GenderType
@@ -46,7 +47,7 @@ class ExamServiceImplTest(
 
     Given("[saveExample] 저장할 DTO가 주어지면") {
         val param: ExamParam = ExamParam("kim", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
-        val example: Example = Example.of("kim", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
+        val example: Example = mockk<Example>()
         every { exampleRepository.save(any()) } returns example
 
         When("DTO로 Example에 저장할 때") {
@@ -61,7 +62,7 @@ class ExamServiceImplTest(
     Given("[saveExampleInfo] 수정할 DTO가 주어지면") {
         val id: Long = 1L
         val param: ExamParam = ExamParam("kim", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
-        val example: Example = Example.of("kim", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
+        val example: Example = Example.of(null, null, null, null, null, null, null)
         every { exampleRepository.findById(id).orElseThrow() } returns example
 
         When("DTO로 Example에 저장할 때") {
@@ -75,7 +76,7 @@ class ExamServiceImplTest(
 
     Given("[deleteExample] 삭제할 id가 주어지면") {
         val id: Long = 1L
-        val example: Example = Example.of("kim", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
+        val example: Example = mockk<Example>()
         every { exampleRepository.findById(id).orElseThrow() } returns example
         every { exampleRepository.delete(example) } returns Unit
 
@@ -89,7 +90,7 @@ class ExamServiceImplTest(
     }
 
     Given("[saveIsAuth] 인증여부를 변경할 id리스트와 인증여부가 주어지면") {
-        val param: ExamIsAuthParam = ExamIsAuthParam(mutableListOf(1L, 2L), true)
+        val param: ExamIsAuthParam = ExamIsAuthParam(listOf(1L, 2L), true)
         every { exampleRepository.saveIsAuth(param.isAuth!!, param.ids!!) } returns Unit
 
         When("DTO로 인증여부를 수정할 때") {

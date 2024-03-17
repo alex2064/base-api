@@ -39,13 +39,6 @@ class ExamController(
     }
 
     @ApiForExam
-    @Operation(summary = "예시 페이징 호출", description = "예시 페이징 호출 description")
-    @GetMapping("/page")
-    fun examPage(@ParameterObject @Valid param: ExamPageParam): ExamPageParam {
-        return param
-    }
-
-    @ApiForExam
     @Operation(summary = "Example 조회", description = "Example 조회")
     @GetMapping("/example")
     fun findExample(@ParameterObject @Valid param: ExamIdParam): ExamResult {

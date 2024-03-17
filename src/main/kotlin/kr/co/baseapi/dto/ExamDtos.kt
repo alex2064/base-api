@@ -93,17 +93,7 @@ data class ExamVaildParam(
     @field:NotBlank
     @field:EmailValid
     val emailNotBlankEmailValid: String?,
-
-
-    @field:Schema(description = "ID")
-    val id: Long?
 )
-
-
-data class ExamPageParam(
-    @field:Schema(description = "이름")
-    val name: String?
-) : PageParam()
 
 data class ExamIdParam(
     @field:Schema(description = "ID")
@@ -144,7 +134,6 @@ data class ExamParam(
     @field:NotNull
     val baseDate: LocalDate?
 )
-
 
 data class ExamResult(
     @field:Schema(description = "ID")
@@ -198,13 +187,17 @@ data class ExamResult(
     }
 }
 
-
 data class ExamIsAuthParam(
     @field:Schema(description = "ID리스트")
     @field:NotNull
-    val ids: MutableList<Long>?,
+    val ids: List<Long>?,
 
     @field:Schema(description = "인증여부")
     @field:NotNull
     val isAuth: Boolean?,
 )
+
+data class ExamPageParam(
+    @field:Schema(description = "이름")
+    val name: String?
+) : PageParam()
