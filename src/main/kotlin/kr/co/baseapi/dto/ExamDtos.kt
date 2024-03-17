@@ -113,11 +113,6 @@ data class ExamIdParam(
 )
 
 data class ExamParam(
-    @field:Schema(description = "ID")
-    @field:NotNull
-    @field:Positive
-    val id: Long?,
-
     @field:Schema(description = "이름")
     @field:NotBlank
     val name: String?,

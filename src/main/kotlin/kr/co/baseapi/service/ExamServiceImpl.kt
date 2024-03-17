@@ -46,8 +46,8 @@ class ExamServiceImpl(
         return true
     }
 
-    override fun saveExampleInfo(param: ExamParam): Boolean {
-        val example: Example = exampleRepository.findById(param.id!!).orElseThrow()
+    override fun saveExampleInfo(id: Long, param: ExamParam): Boolean {
+        val example: Example = exampleRepository.findById(id).orElseThrow()
         example.updateInfo(
             name = param.name,
             age = param.age,

@@ -45,7 +45,7 @@ class ExamServiceImplTest(
     }
 
     Given("[saveExample] 저장할 DTO가 주어지면") {
-        val param: ExamParam = ExamParam(null, "kim", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
+        val param: ExamParam = ExamParam("kim", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
         val example: Example = Example.of("kim", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
         every { exampleRepository.save(any()) } returns example
 
@@ -59,12 +59,13 @@ class ExamServiceImplTest(
     }
 
     Given("[saveExampleInfo] 수정할 DTO가 주어지면") {
-        val param: ExamParam = ExamParam(1L, "kim", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
+        val id: Long = 1L
+        val param: ExamParam = ExamParam("kim", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
         val example: Example = Example.of("kim", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
-        every { exampleRepository.findById(param.id!!).orElseThrow() } returns example
+        every { exampleRepository.findById(id).orElseThrow() } returns example
 
         When("DTO로 Example에 저장할 때") {
-            val result: Boolean = examService.saveExampleInfo(param)
+            val result: Boolean = examService.saveExampleInfo(id, param)
 
             Then("result로 true가 나와야 한다.") {
                 result shouldBe true

@@ -9,7 +9,7 @@ interface ExamService {
 
     fun saveExample(param: ExamParam): Boolean
 
-    fun saveExampleInfo(param: ExamParam): Boolean
+    fun saveExampleInfo(id: Long, param: ExamParam): Boolean
 
     fun deleteExample(id: Long): Boolean
 

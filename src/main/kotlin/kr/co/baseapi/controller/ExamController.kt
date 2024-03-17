@@ -64,7 +64,7 @@ class ExamController(
     @PutMapping("/example/{id}")
     fun saveExampleInfo(@PathVariable("id") id: Long, @RequestBody @Valid param: ExamParam): Boolean {
         require(id > 0) { "id는 0보다 커야합니다." }
-        return examService.saveExampleInfo(param)
+        return examService.saveExampleInfo(id, param)
     }
 
     @ApiForExam
