@@ -19,10 +19,10 @@ private val log = KotlinLogging.logger {}
  */
 @Transactional
 @Service
-class ExamServiceImpl(
+class ExampleServiceImpl(
     private val exampleRepository: ExampleRepository,
     private val exampleRepositorySupport: ExampleRepositorySupport
-) : ExamService {
+) : ExampleService {
 
     override fun findExample(id: Long): ExamResult {
         val example: Example = exampleRepository.findById(id).orElseThrow()

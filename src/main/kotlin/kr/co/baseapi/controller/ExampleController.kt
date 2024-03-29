@@ -5,9 +5,8 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import kr.co.baseapi.common.swagger.ApiForExam
 import kr.co.baseapi.dto.*
-import kr.co.baseapi.service.ExamService
+import kr.co.baseapi.service.ExampleService
 import org.springdoc.core.annotations.ParameterObject
-import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -20,8 +19,8 @@ import org.springframework.web.bind.annotation.*
 @Tag(name = "예시 controller")
 @RequestMapping("/exam")
 @RestController
-class ExamController(
-    private val examService: ExamService
+class ExampleController(
+    private val exampleService: ExampleService
 ) {
 
     @ApiForExam
@@ -42,14 +41,14 @@ class ExamController(
     @Operation(summary = "Example 조회", description = "Example 조회")
     @GetMapping("/example")
     fun findExample(@ParameterObject @Valid param: ExamIdParam): ExamResult {
-        return examService.findExample(param.id!!)
+        return exampleService.findExample(param.id!!)
     }
 
     @ApiForExam
     @Operation(summary = "Example 추가", description = "Example 추가")
     @PostMapping("/example")
     fun saveExample(@RequestBody @Valid param: ExamParam): Boolean {
-        return examService.saveExample(param)
+        return exampleService.saveExample(param)
     }
 
     @ApiForExam
@@ -57,7 +56,7 @@ class ExamController(
     @PutMapping("/example/{id}")
     fun saveExampleInfo(@PathVariable("id") id: Long, @RequestBody @Valid param: ExamParam): Boolean {
         require(id > 0) { "id는 0보다 커야합니다." }
-        return examService.saveExampleInfo(id, param)
+        return exampleService.saveExampleInfo(id, param)
     }
 
     @ApiForExam
@@ -65,34 +64,34 @@ class ExamController(
     @DeleteMapping("/example/{id}")
     fun deleteExample(@PathVariable("id") id: Long): Boolean {
         require(id > 0) { "id는 0보다 커야합니다." }
-        return examService.deleteExample(id)
+        return exampleService.deleteExample(id)
     }
 
     @ApiForExam
     @Operation(summary = "isAuth update", description = "isAuth update")
     @PutMapping("/example/auth")
     fun saveIsAuth(@RequestBody @Valid param: ExamIsAuthParam): Boolean {
-        return examService.saveIsAuth(param)
+        return exampleService.saveIsAuth(param)
     }
 
     @ApiForExam
     @Operation(summary = "select Lock", description = "select Lock")
     @GetMapping("/example/lock")
     fun findExampleForLock(@ParameterObject @Valid param: ExamIdParam): ExamResult {
-        return examService.findExampleForLock(param.id!!)
+        return exampleService.findExampleForLock(param.id!!)
     }
 
     @ApiForExam
     @Operation(summary = "select querydsl", description = "select querydsl")
     @GetMapping("/example/querydsl")
     fun findExampleDsl(@ParameterObject @Valid param: ExamIdParam): ExamResult {
-        return examService.findExampleDsl(param.id!!)
+        return exampleService.findExampleDsl(param.id!!)
     }
 
     @ApiForExam
     @Operation(summary = "조회 페이징 처리", description = "조회 페이징 처리")
     @GetMapping("/example/page")
     fun findExampleDslPage(@ParameterObject @Valid param: ExamPageParam): PageResult<ExamResult> {
-        return examService.findExampleDslPage(param)
+        return exampleService.findExampleDslPage(param)
     }
 }

@@ -1,9 +1,8 @@
 package kr.co.baseapi.service
 
 import kr.co.baseapi.dto.*
-import kr.co.baseapi.entity.Example
 
-interface ExamService {
+interface ExampleService {
 
     fun findExample(id: Long): ExamResult
 

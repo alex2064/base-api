@@ -13,7 +13,7 @@ import kr.co.baseapi.dto.ExamParam
 import kr.co.baseapi.dto.ExamResult
 import kr.co.baseapi.dto.ExamVaildParam
 import kr.co.baseapi.enums.GenderType
-import kr.co.baseapi.service.ExamService
+import kr.co.baseapi.service.ExampleService
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.http.ProblemDetail
@@ -28,11 +28,11 @@ import java.nio.charset.StandardCharsets
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-@WebMvcTest(ExamController::class)
-class ExamControllerTest(
+@WebMvcTest(ExampleController::class)
+class ExampleControllerTest(
     private val mockMvc: MockMvc,
     private val objectMapper: ObjectMapper,
-    @MockkBean private val examService: ExamService
+    @MockkBean private val exampleService: ExampleService
 ) : BehaviorSpec({
     isolationMode = IsolationMode.InstancePerLeaf
 
@@ -246,7 +246,7 @@ class ExamControllerTest(
     Given("[GET][/exam/example] 조회할 Example의 id가 주어지면") {
         val path: String = "/exam/example"
         val id: Long = 1L
-        every { examService.findExample(id) } returns
+        every { exampleService.findExample(id) } returns
                 ExamResult(id, null, null, null, null, null, null, null)
 
         When("정상적인 Request를 보낼 때") {
@@ -308,7 +308,7 @@ class ExamControllerTest(
         val isAuth: Boolean = true
         val baseDate: LocalDate = LocalDate.now()
         val param: ExamParam = ExamParam(name, age, amount, height, gender, isAuth, baseDate)
-        every { examService.saveExample(param) } returns true
+        every { exampleService.saveExample(param) } returns true
 
         When("정상적인 Request를 보낼 때") {
             val resultActions: ResultActions = mockMvc.perform(
@@ -378,7 +378,7 @@ class ExamControllerTest(
         val isAuth: Boolean = true
         val baseDate: LocalDate = LocalDate.now()
         val param: ExamParam = ExamParam(name, age, amount, height, gender, isAuth, baseDate)
-        every { examService.saveExampleInfo(id, param) } returns true
+        every { exampleService.saveExampleInfo(id, param) } returns true
 
         When("정상적인 Request를 보낼 때") {
             val resultActions: ResultActions = mockMvc.perform(
@@ -465,7 +465,7 @@ class ExamControllerTest(
     Given("[DELETE][/exam/example/{id}] 삭제할 Example의 id가 주어지면") {
         val id: Long = 1L
         val path: String = "/exam/example/$id"
-        every { examService.deleteExample(id) } returns true
+        every { exampleService.deleteExample(id) } returns true
 
         When("정상적인 Request를 보낼 때") {
             val resultActions: ResultActions = mockMvc.perform(

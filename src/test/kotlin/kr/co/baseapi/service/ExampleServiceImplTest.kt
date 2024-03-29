@@ -17,9 +17,9 @@ import org.springframework.data.domain.PageRequest
 import java.math.BigDecimal
 import java.time.LocalDate
 
-@Import(ExamServiceImpl::class)
-class ExamServiceImplTest(
-    private val examService: ExamService,
+@Import(ExampleServiceImpl::class)
+class ExampleServiceImplTest(
+    private val exampleService: ExampleService,
     @MockkBean private val exampleRepository: ExampleRepository,
     @MockkBean private val exampleRepositorySupport: ExampleRepositorySupport
 ) : BehaviorSpec({
@@ -31,7 +31,7 @@ class ExamServiceImplTest(
         every { exampleRepository.findById(id).orElseThrow() } returns example
 
         When("id로 example을 찾을 때") {
-            val result: ExamResult = examService.findExample(id)
+            val result: ExamResult = exampleService.findExample(id)
 
             Then("Result DTO와 엔티티에 들어있는 값이 일치해야 한다.") {
                 result.name shouldBe example.name
@@ -51,7 +51,7 @@ class ExamServiceImplTest(
         every { exampleRepository.save(any()) } returns example
 
         When("DTO로 Example에 저장할 때") {
-            val result: Boolean = examService.saveExample(param)
+            val result: Boolean = exampleService.saveExample(param)
 
             Then("result로 true가 나와야 한다.") {
                 result shouldBe true
@@ -66,7 +66,7 @@ class ExamServiceImplTest(
         every { exampleRepository.findById(id).orElseThrow() } returns example
 
         When("DTO로 Example에 저장할 때") {
-            val result: Boolean = examService.saveExampleInfo(id, param)
+            val result: Boolean = exampleService.saveExampleInfo(id, param)
 
             Then("result로 true가 나와야 한다.") {
                 result shouldBe true
@@ -81,7 +81,7 @@ class ExamServiceImplTest(
         every { exampleRepository.delete(example) } returns Unit
 
         When("id로 Example을 삭제할 때") {
-            val result: Boolean = examService.deleteExample(id)
+            val result: Boolean = exampleService.deleteExample(id)
 
             Then("result로 true가 나와야 한다.") {
                 result shouldBe true
@@ -94,7 +94,7 @@ class ExamServiceImplTest(
         every { exampleRepository.saveIsAuth(param.isAuth!!, param.ids!!) } returns Unit
 
         When("DTO로 인증여부를 수정할 때") {
-            val result: Boolean = examService.saveIsAuth(param)
+            val result: Boolean = exampleService.saveIsAuth(param)
 
             Then("result로 true가 나와야 한다.") {
                 result shouldBe true
@@ -108,7 +108,7 @@ class ExamServiceImplTest(
         every { exampleRepository.findByIdForLock(id).orElseThrow() } returns example
 
         When("id로 example을 찾을 때") {
-            val result: ExamResult = examService.findExampleForLock(id)
+            val result: ExamResult = exampleService.findExampleForLock(id)
 
             Then("Result DTO와 엔티티에 들어있는 값이 일치해야 한다.") {
                 result.name shouldBe example.name
@@ -128,7 +128,7 @@ class ExamServiceImplTest(
         every { exampleRepositorySupport.findById(id).orElseThrow() } returns example
 
         When("id로 example을 찾을 때") {
-            val result: ExamResult = examService.findExampleDsl(id)
+            val result: ExamResult = exampleService.findExampleDsl(id)
 
             Then("Result DTO와 엔티티에 들어있는 값이 일치해야 한다.") {
                 result.name shouldBe example.name
@@ -149,7 +149,7 @@ class ExamServiceImplTest(
                 PageImpl<ExamResult>(mutableListOf(), PageRequest.of(0, 20), 0L)
 
         When("DTO로 example을 찾을 때") {
-            val result: PageResult<ExamResult> = examService.findExampleDslPage(param)
+            val result: PageResult<ExamResult> = exampleService.findExampleDslPage(param)
 
             Then("페이징 처리된 빈 result DTO가 나와야 한다.") {
                 result.pageNumber shouldBe 0
