@@ -51,6 +51,7 @@ dependencies {
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 
     // === redis ===
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
 
     // === mongodb ===
