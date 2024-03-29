@@ -3,6 +3,7 @@ package kr.co.baseapi.redis.entity
 import kr.co.baseapi.enums.GenderType
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
+import org.springframework.data.redis.core.TimeToLive
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -16,5 +17,8 @@ data class RedisExample(
     val height: BigDecimal?,
     val gender: GenderType?,
     val isAuth: Boolean?,
-    val baseDate: LocalDate?
+    val baseDate: LocalDate?,
+
+    @TimeToLive
+    val ttl: Long
 )

@@ -26,7 +26,8 @@ class RedisExampleServiceImpl(
             height = param.height,
             gender = param.gender,
             isAuth = param.isAuth,
-            baseDate = param.baseDate
+            baseDate = param.baseDate,
+            ttl = 10
         )
 
         redisExampleRepository.save(redisExample)
@@ -42,7 +43,8 @@ class RedisExampleServiceImpl(
             height = param.height,
             gender = param.gender,
             isAuth = param.isAuth,
-            baseDate = param.baseDate
+            baseDate = param.baseDate,
+            ttl = 10
         )
 
         redisExampleRepository.save(redisExample)
