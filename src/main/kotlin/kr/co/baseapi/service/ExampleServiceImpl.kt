@@ -1,5 +1,6 @@
 package kr.co.baseapi.service
 
+import kr.co.baseapi.common.property.KeyProperties
 import kr.co.baseapi.dto.*
 import kr.co.baseapi.entity.Example
 import kr.co.baseapi.repository.ExampleRepository
@@ -21,7 +22,8 @@ private val log = KotlinLogging.logger {}
 @Service
 class ExampleServiceImpl(
     private val exampleRepository: ExampleRepository,
-    private val exampleRepositorySupport: ExampleRepositorySupport
+    private val exampleRepositorySupport: ExampleRepositorySupport,
+    private val keyProperties: KeyProperties
 ) : ExampleService {
 
     override fun findExample(id: Long): ExamResult {
@@ -93,5 +95,9 @@ class ExampleServiceImpl(
         val result: PageResult<ExamResult> = PageResult.pageOf(page)
 
         return result
+    }
+
+    override fun findKey(): String {
+        return keyProperties.apiKey
     }
 }

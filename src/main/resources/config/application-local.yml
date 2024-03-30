@@ -86,3 +86,8 @@ decorator:
   datasource:
     p6spy:
       enable-logging: true
+
+# === key properties(사용자 지정) ===
+keys:
+  apiKey: AAAAAAAAAA
+  apiKey2: BBBBBBBBBB
