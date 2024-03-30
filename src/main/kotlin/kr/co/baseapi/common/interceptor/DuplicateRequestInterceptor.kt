@@ -43,10 +43,8 @@ class DuplicateRequestInterceptor(
         handler: Any,
         ex: Exception?
     ) {
-        if (response.status == HttpStatus.OK.value()) {
-            val requestKey: String = createRequestKey(request)
-            stringRedisTemplate.delete(requestKey)
-        }
+        val requestKey: String = createRequestKey(request)
+        stringRedisTemplate.delete(requestKey)
     }
 
     private fun createRequestKey(request: HttpServletRequest): String {
