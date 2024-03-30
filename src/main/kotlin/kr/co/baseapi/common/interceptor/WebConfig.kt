@@ -5,8 +5,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-class WebConfig(val requestInterceptor: RequestInterceptor) : WebMvcConfigurer {
+class WebConfig(
+    private val requestInterceptor: RequestInterceptor,
+    private val duplicateRequestInterceptor: DuplicateRequestInterceptor
+) : WebMvcConfigurer {
+
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(requestInterceptor)
+        registry.addInterceptor(duplicateRequestInterceptor)
     }
 }
