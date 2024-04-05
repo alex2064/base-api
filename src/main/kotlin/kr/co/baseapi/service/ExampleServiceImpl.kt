@@ -6,6 +6,9 @@ import kr.co.baseapi.entity.Example
 import kr.co.baseapi.repository.ExampleRepository
 import kr.co.baseapi.repository.ExampleRepositorySupport
 import mu.KotlinLogging
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.CachePut
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -17,6 +20,7 @@ private val log = KotlinLogging.logger {}
  * 1. class 단위의 @Transactional 기본 사용
  * 2. 구현할 Service Interface와 순서 일치
  * 3. 조회는 {find~}, 저장은 {save~}, 삭제는 {delete~}, 여러 작업 처리는 {proc~} 로 메소드명 사용
+ * 4. Cacheable은 {~Cache}, CachePut은 {~CachePut}, CacheEvict은 {~Cache} 로 메소드명 사용
  */
 @Transactional
 @Service
@@ -99,5 +103,29 @@ class ExampleServiceImpl(
 
     override fun findKey(): String {
         return keyProperties.apiKey
+    }
+
+    @Cacheable(cacheNames = ["ExampleCache"], key = "#id")
+    override fun findExampleCache(id: Long): ExamResult {
+        val example: Example = exampleRepository.findById(id).orElseThrow()
+        val result: ExamResult = ExamResult.exampleOf(example)
+
+        return result
+    }
+
+    @CachePut(cacheNames = ["ExampleCache"], key = "#id")
+    override fun findExampleCachePut(id: Long): ExamResult {
+        val example: Example = exampleRepository.findById(id).orElseThrow()
+        val result: ExamResult = ExamResult.exampleOf(example)
+
+        return result
+    }
+
+    @CacheEvict(cacheNames = ["ExampleCache"], key = "#id")
+    override fun deleteExampleCache(id: Long): Boolean {
+        val example: Example = exampleRepository.findById(id).orElseThrow()
+        exampleRepository.delete(example)
+
+        return true
     }
 }

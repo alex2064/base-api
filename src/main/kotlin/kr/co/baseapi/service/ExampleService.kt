@@ -21,4 +21,10 @@ interface ExampleService {
     fun findExampleDslPage(param: ExamPageParam): PageResult<ExamResult>
 
     fun findKey(): String
+
+    fun findExampleCache(id: Long): ExamResult
+
+    fun findExampleCachePut(id: Long): ExamResult
+
+    fun deleteExampleCache(id: Long): Boolean
 }
