@@ -6,6 +6,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import kr.co.baseapi.common.property.KeyProperties
 import kr.co.baseapi.dto.*
 import kr.co.baseapi.entity.Example
 import kr.co.baseapi.enums.GenderType
@@ -21,7 +22,8 @@ import java.time.LocalDate
 class ExampleServiceImplTest(
     private val exampleService: ExampleService,
     @MockkBean private val exampleRepository: ExampleRepository,
-    @MockkBean private val exampleRepositorySupport: ExampleRepositorySupport
+    @MockkBean private val exampleRepositorySupport: ExampleRepositorySupport,
+    @MockkBean private val keyProperties: KeyProperties
 ) : BehaviorSpec({
     isolationMode = IsolationMode.InstancePerLeaf
 

@@ -52,6 +52,6 @@ class DuplicateRequestInterceptor(
         val method: String = request.method
         val requestURI: String = request.requestURI
 
-        return "request:$remoteAddr:$method:$requestURI"
+        return "request:$remoteAddr-$method-$requestURI"
     }
 }
