@@ -56,6 +56,9 @@ dependencies {
 
     // === mongodb ===
 
+    // === AMQP(RabbitMQ) ===
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
+
 
     // === Swagger ===
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
