@@ -1,6 +1,7 @@
 package kr.co.baseapi.mq
 
 import com.rabbitmq.client.Channel
+import kr.co.baseapi.dto.ExamParam
 import mu.KotlinLogging
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.support.AmqpHeaders
@@ -22,6 +23,19 @@ class MessageReceiver {
         } catch (e: Exception) {
             channel.basicNack(deliveryTag, false, false)    // 세번째 인자는 메세지를 큐에 다시 넣을지 여부
             throw e // MessageQueueErrorHandler 에서 retry 로직 대기 중
+        }
+    }
+
+
+    @RabbitListener(queues = ["example.queue.dto"])
+    fun receiveDto(param: ExamParam, channel: Channel, @Header(AmqpHeaders.DELIVERY_TAG) deliveryTag: Long) {
+        try {
+            log.info { "Received DTO: $param" }
+            channel.basicAck(deliveryTag, false)
+
+        } catch (e: Exception) {
+            channel.basicNack(deliveryTag, false, false)
+            throw e
         }
     }
 }
