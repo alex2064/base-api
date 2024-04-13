@@ -17,10 +17,17 @@ private val log = KotlinLogging.logger {}
 
 /**
  * Service 생성
- * 1. class 단위의 @Transactional 기본 사용
- * 2. 구현할 Service Interface와 순서 일치
- * 3. 조회는 {find~}, 저장은 {save~}, 삭제는 {delete~}, 여러 작업 처리는 {proc~} 로 메소드명 사용
- * 4. Cacheable은 {~Cache}, CachePut은 {~CachePut}, CacheEvict은 {~Cache} 로 메소드명 사용
+ * 1. 구현할 Service Interface 와 순서 일치
+ * 2. class 단위의 @Transactional 기본 사용
+ * 3. 메서드 단위로 트랜잭션이 필요한 경우 서비스를 따로 빼서 별도로 사용
+ * 4. 트랜잭션을 따로 빼는 경우 대상을 추출하는 트랜잭션이 걸리지 않은 class 는 {Target~ServiceImpl}로 생성
+ * 5. 메서드 명 사용
+ *      1) {find~} : 조회
+ *      2) {save~} : 저장
+ *      3) {delete~} : 삭제
+ *      4) {proc~} : 여러 작업 처리
+ *      5) {~Cache} : @Cacheable, @CacheEvict
+ *      6) {~CachePut} : CachePut
  */
 @Transactional
 @Service
@@ -90,6 +97,12 @@ class ExampleServiceImpl(
     override fun findExampleDsl(id: Long): ExamResult {
         val example: Example = exampleRepositorySupport.findById(id).orElseThrow()
         val result: ExamResult = ExamResult.exampleOf(example)
+
+        return result
+    }
+
+    override fun findExampleDslList(param: ExamPageParam): List<ExamResult> {
+        val result: List<ExamResult> = exampleRepositorySupport.findByNameList(param)
 
         return result
     }

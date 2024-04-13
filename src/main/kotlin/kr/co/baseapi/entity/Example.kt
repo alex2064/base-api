@@ -10,11 +10,17 @@ import java.time.LocalDate
 
 /**
  * Entity 생성
- * 1. class로 만들기
+ * 1. class 로 만들기
  * 2. BaseEntity() 상속
  * 3. var + null 허용 + protected set(필요한 경우만 제거)
- * 4. 주 생성자 protected로 막고 팩토리 메서드만 사용
- * 5. entity 변경은 메소드 사용
+ * 4. 주 생성자 protected 로 막기
+ * 5. Entity 생성 : 팩토리 메서드 사용
+ * 6. Entity 변경 : 메서드 사용
+ * 7. Enum 은 Converter class 생성 후 사용
+ * 8. Boolean 은 YesNoConverter 사용
+ * 9. 메서드 명 사용
+ *      1) {of, ~Of} : 팩토리 메서드
+ *      2) {add~, modify~} : 엔티티 변경 메서드(행동이 나오고 뒤에 이어서 대상이 나오게 메서드명 사용)
  */
 @Entity
 @Table(schema = "dev", name = "EXAMPLE")

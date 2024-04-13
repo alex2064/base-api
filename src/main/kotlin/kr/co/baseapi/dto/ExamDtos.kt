@@ -17,9 +17,21 @@ import java.time.LocalDate
  * DTO 생성
  * 1. data class(주 생성자 + val + null 허용) 로 만들기
  * 2. Spring validation 으로 유효성 체크
- * 3. Request DTO는 {~Param}, Response DTO는 {~Result} 로 클래스명 생성
+ *      1) String 타입 : @NotBlank
+ *      2) Int 타입 : @PositiveOrZero, @Positive, @NotNull
+ *      3) Long 타입 : @PositiveOrZero, @Positive, @NotNull
+ *      4) BigDecimal 타입 : @DecimalMin(value = "0.0"), @NotNull
+ *      5) Enum 타입 : @EnumValid, enum class 에 EnumUtil.getEnumByNameOrCode 필수
+ *      6) LocalDate 타입 : @NotNull, enum 처럼 건드릴 수 없어서 날짜 형식이 아니면 미리 error 발생
+ *      7) Email 타입 : @EmailValid, @NotBlank
+ * 3. @Schema 필수
  * 4. Paging 처리가 필요한 요청은 PageParam() 상속
- * 5. 주 생성자와 팩토리 메소드 둘 다 사용
+ * 5. 주 생성자와 팩토리 메서드 둘 다 사용
+ *      1) 주 생성자 : 값을 그대로 사용해서 인스턴스를 만드는 경우
+ *      2) 팩토리 메서드 : 값을 그대로 사용안하고 setter 로 뽑거나 가공 처리하고 인스턴스를 만드는 경우
+ * 6. 클래스 명 사용
+ *      1) {~Param} : Request DTO
+ *      2) {~Result} : Response DTO
  */
 data class ExamVaildParam(
 
@@ -30,7 +42,7 @@ data class ExamVaildParam(
     val stringNotBlank: String?,
 
 
-    // Int 타입 : @Positive, @NotNull
+    // Int 타입 : @PositiveOrZero, @Positive, @NotNull
     val int: Int?,
 
     @field:NotNull
@@ -44,7 +56,7 @@ data class ExamVaildParam(
     val intNotNullPositive: Int?,
 
 
-    // Long 타입 : @Positive, @NotNull
+    // Long 타입 : @PositiveOrZero, @Positive, @NotNull
     val long: Long?,
 
     @field:NotNull
@@ -72,14 +84,14 @@ data class ExamVaildParam(
     val bigDecimalNotNullDecimalMin: BigDecimal?,
 
 
-    // Enum 타입 : @EnumValid, enum class에 EnumUtil.getEnumByNameOrCode 필수
+    // Enum 타입 : @EnumValid, enum class 에 EnumUtil.getEnumByNameOrCode 필수
     val examType: GenderType?,
 
     @field:EnumValid(enumClass = GenderType::class)
     val examTypeEnumValid: GenderType?,
 
 
-    // LocalDate 타입 : @NotNull, enum처럼 건드릴 수 없어서 날짜 형식이 아니면 미리 error 발생
+    // LocalDate 타입 : @NotNull, enum 처럼 건드릴 수 없어서 날짜 형식이 아니면 미리 error 발생
     val localdate: LocalDate?,
 
     @field:NotNull

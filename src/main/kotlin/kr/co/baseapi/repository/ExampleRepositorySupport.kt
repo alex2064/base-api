@@ -11,5 +11,7 @@ interface ExampleRepositorySupport {
 
     fun findById(id: Long): Optional<Example>
 
+    fun findByNameList(param: ExamPageParam): List<ExamResult>
+
     fun findByNamePage(param: ExamPageParam): PageImpl<ExamResult>
 }

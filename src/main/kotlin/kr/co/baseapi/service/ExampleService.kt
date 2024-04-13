@@ -18,6 +18,8 @@ interface ExampleService {
 
     fun findExampleDsl(id: Long): ExamResult
 
+    fun findExampleDslList(param: ExamPageParam): List<ExamResult>
+
     fun findExampleDslPage(param: ExamPageParam): PageResult<ExamResult>
 
     fun findKey(): String

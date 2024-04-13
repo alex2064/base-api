@@ -17,9 +17,11 @@ import java.util.*
 /**
  * RepositorySupport 생성
  * 1. JPAQueryFactory 주입받아 사용
- * 2. join이 필요한 select만 QueryDSL로 사용
- * 3. JPA Query Methods와 최대한 비슷하게 함수명 사용({find~}, {By~})
- * 4. paging 처리는 {~Page} 로 함수명 사용
+ * 2. 조회 조건이 많은 SQL, Join, Page 처리가 필요한 select 만 QueryDSL 로 사용
+ * 3. select 의 return type 은 Optional<>, List<>, PageImpl<> 로 통일
+ * 4. 메서드 명 사용
+ *      1) {~Page} : paging 처리
+ *      2) JPA Query Methods 와 최대한 비슷하게 함수명 사용({find~}, {By~})
  * 5. paging 처리 순서
  *      1. PageParam() 상속받은 DTO 파라미터로 받기
  *      2. 사용할 entity 나열
@@ -43,6 +45,32 @@ class ExampleRepositorySupportImpl(
                 .where(example.id.eq(id))
                 .fetchOne()
         )
+    }
+
+    override fun findByNameList(param: ExamPageParam): List<ExamResult> {
+        val example: QExample = QExample.example
+
+        val booleanBuilder: BooleanBuilder = BooleanBuilder()
+            .and(example.name.contains(param.name))
+            .and(example.isAuth.eq(true))
+
+        return jpaQueryFactory
+            .select(
+                Projections.constructor(
+                    ExamResult::class.java,
+                    example.id,
+                    example.name,
+                    example.age,
+                    example.amount,
+                    example.height,
+                    example.gender,
+                    example.isAuth,
+                    example.baseDate
+                )
+            )
+            .from(example)
+            .where(booleanBuilder)
+            .fetch()
     }
 
     override fun findByNamePage(param: ExamPageParam): PageImpl<ExamResult> {
