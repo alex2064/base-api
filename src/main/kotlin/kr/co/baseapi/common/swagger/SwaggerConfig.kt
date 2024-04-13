@@ -19,4 +19,11 @@ class SwaggerConfig {
             .addOpenApiMethodFilter { it.isAnnotationPresent(ApiForExam::class.java) }
             .build()
 
+    @Bean
+    fun questGroup(): GroupedOpenApi =
+        GroupedOpenApi.builder()
+            .group("질문 API")
+            .addOpenApiMethodFilter { it.isAnnotationPresent(ApiForQuest::class.java) }
+            .build()
+
 }

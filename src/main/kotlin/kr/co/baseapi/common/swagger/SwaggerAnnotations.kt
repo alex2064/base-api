@@ -4,3 +4,8 @@ package kr.co.baseapi.common.swagger
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 annotation class ApiForExam()
+
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+@MustBeDocumented
+annotation class ApiForQuest()
