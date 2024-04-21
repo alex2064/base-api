@@ -66,7 +66,7 @@ dependencies {
     // === Logging ===
     implementation("io.github.microutils:kotlin-logging:3.0.5")
 
-    // === p6spy(queryDsl Sql Log) ===
+    // === p6spy(Sql Log) ===
     implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1")
 
     // === Test ===
