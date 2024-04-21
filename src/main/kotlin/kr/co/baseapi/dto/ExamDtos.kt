@@ -3,10 +3,12 @@ package kr.co.baseapi.dto
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.DecimalMin
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Positive
 import kr.co.baseapi.common.validator.EmailValid
 import kr.co.baseapi.common.validator.EnumValid
+import kr.co.baseapi.common.validator.PhoneValid
 import kr.co.baseapi.entity.Example
 import kr.co.baseapi.enums.GenderType
 import java.math.BigDecimal
@@ -24,11 +26,12 @@ import java.time.LocalDate
  *      5) Enum 타입 : @EnumValid, enum class 에 EnumUtil.getEnumByNameOrCode 필수
  *      6) LocalDate 타입 : @NotNull, enum 처럼 건드릴 수 없어서 날짜 형식이 아니면 미리 error 발생
  *      7) Email 타입 : @EmailValid, @NotBlank
+ *      8) Phone 타입 : @PhoneValid, @NotBlank
  * 3. @Schema 필수
  * 4. Paging 처리가 필요한 요청은 PageParam() 상속
  * 5. 주 생성자와 팩토리 메서드 둘 다 사용
  *      1) 주 생성자 : 값을 그대로 사용해서 인스턴스를 만드는 경우
- *      2) 팩토리 메서드 : 값을 그대로 사용안하고 setter 로 뽑거나 가공 처리하고 인스턴스를 만드는 경우
+ *      2) 팩토리 메서드 : 값을 그대로 사용 안하고 setter 로 뽑거나 가공 처리하고 인스턴스를 만드는 경우
  * 6. 클래스 명 사용
  *      1) {~Param} : Request DTO
  *      2) {~Result} : Response DTO
@@ -100,11 +103,19 @@ data class ExamVaildParam(
 
     // Email 타입 : @EmailValid, @NotBlank
     @field:EmailValid
-    val emailEmailValid: String?,
+    val emailValid: String?,
 
     @field:NotBlank
     @field:EmailValid
-    val emailNotBlankEmailValid: String?,
+    val emailNotBlankValid: String?,
+
+    // Phone 타입 : @PhoneValid, @NotBlank
+    @field:PhoneValid
+    val phoneValid: String?,
+
+    @field:NotBlank
+    @field:PhoneValid
+    val phoneNotBlankValid: String?,
 )
 
 data class ExamIdParam(
@@ -201,7 +212,7 @@ data class ExamResult(
 
 data class ExamIsAuthParam(
     @field:Schema(description = "ID리스트")
-    @field:NotNull
+    @field:NotEmpty
     val ids: List<Long>?,
 
     @field:Schema(description = "인증여부")

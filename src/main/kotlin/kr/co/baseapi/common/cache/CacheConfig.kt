@@ -24,10 +24,10 @@ class CacheConfig {
     @Bean
     fun cacheManager(redisConnectionFactory: RedisConnectionFactory): RedisCacheManager {
         val objectMapper: ObjectMapper = ObjectMapper().apply {
-            findAndRegisterModules()
-            enable(SerializationFeature.INDENT_OUTPUT)
-            disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            findAndRegisterModules()        // Java8 날짜와 시간 API 등의 모듈 처리를 자동화
+            enable(SerializationFeature.INDENT_OUTPUT)      // 출력되는 Json을 보기 좋게 들여쓰기
+            disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)     // Java 날짜와 시간을 타임스탬프가 아닌 ISO 형식의 문자열로 직렬화
+            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false) // 알 수 없는 속성은 무시
             activateDefaultTyping(
                 BasicPolymorphicTypeValidator.builder().allowIfBaseType(Any::class.java).build(),
                 ObjectMapper.DefaultTyping.EVERYTHING,

@@ -9,12 +9,15 @@ import io.kotest.matchers.maps.shouldContainKey
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import kr.co.baseapi.common.handler.dto.BaseResponse
+import kr.co.baseapi.common.interceptor.WebConfig
 import kr.co.baseapi.dto.ExamParam
 import kr.co.baseapi.dto.ExamResult
 import kr.co.baseapi.dto.ExamVaildParam
 import kr.co.baseapi.enums.GenderType
 import kr.co.baseapi.service.ExampleService
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.FilterType
 import org.springframework.http.MediaType
 import org.springframework.http.ProblemDetail
 import org.springframework.test.web.servlet.MockMvc
@@ -28,7 +31,12 @@ import java.nio.charset.StandardCharsets
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-@WebMvcTest(ExampleController::class)
+@WebMvcTest(
+    controllers = [ExampleController::class],
+    excludeFilters = [
+        ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = [WebConfig::class])
+    ]
+)
 class ExampleControllerTest(
     private val mockMvc: MockMvc,
     private val objectMapper: ObjectMapper,
@@ -58,8 +66,10 @@ class ExampleControllerTest(
         val examTypeEnumValid: GenderType = GenderType.MAN
         val localdate: LocalDate = LocalDate.of(2024, 1, 2)
         val localdateNotNull: LocalDate = LocalDate.of(2024, 1, 2)
-        val emailEmailValid: String = "abcde@naver.com"
-        val emailNotBlankEmailValid: String = "abcde@naver.com"
+        val emailValid: String = "abcde@naver.com"
+        val emailNotBlankValid: String = "abcde@naver.com"
+        val phoneValid: String = "01012345678"
+        val phoneNotBlankValid: String = "01012345678"
 
         When("정상적인 Request를 보낼 때") {
             val resultActions: ResultActions = mockMvc.perform(
@@ -82,8 +92,10 @@ class ExampleControllerTest(
                     .param("examTypeEnumValid", examTypeEnumValid.name)
                     .param("localdate", localdate.format(dateTimeFormatter))
                     .param("localdateNotNull", localdateNotNull.format(dateTimeFormatter))
-                    .param("emailEmailValid", emailEmailValid)
-                    .param("emailNotBlankEmailValid", emailNotBlankEmailValid)
+                    .param("emailValid", emailValid)
+                    .param("emailNotBlankValid", emailNotBlankValid)
+                    .param("phoneValid", phoneValid)
+                    .param("phoneNotBlankValid", phoneNotBlankValid)
                     .contentType(MediaType.APPLICATION_JSON)
             )
 
@@ -111,7 +123,8 @@ class ExampleControllerTest(
                     .param("longNotNullPositive", "0")
                     .param("bigDecimalDecimalMin", "-1")
                     .param("bigDecimalNotNullDecimalMin", "-1")
-                    .param("emailNotBlankEmailValid", "abcde@")
+                    .param("emailNotBlankValid", "abcde@")
+                    .param("phoneNotBlankValid", "010")
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Accept-Language", "ko")
             )
@@ -142,7 +155,8 @@ class ExampleControllerTest(
                 fieldErrors shouldContainKey "bigDecimalNotNullDecimalMin"
                 fieldErrors shouldContainKey "examTypeEnumValid"
                 fieldErrors shouldContainKey "localdateNotNull"
-                fieldErrors shouldContainKey "emailNotBlankEmailValid"
+                fieldErrors shouldContainKey "emailNotBlankValid"
+                fieldErrors shouldContainKey "phoneNotBlankValid"
             }
         }
     }
@@ -168,8 +182,10 @@ class ExampleControllerTest(
             this["examTypeEnumValid"] = "MAN"
             this["localdate"] = "2024-01-02"
             this["localdateNotNull"] = "2024-01-02"
-            this["emailEmailValid"] = "abcde@naver.com"
-            this["emailNotBlankEmailValid"] = "abcde@naver.com"
+            this["emailValid"] = "abcde@naver.com"
+            this["emailNotBlankValid"] = "abcde@naver.com"
+            this["phoneValid"] = "01012345678"
+            this["phoneNotBlankValid"] = "01012345678"
         }
 
         val badParam: Map<String, String> = mutableMapOf<String, String>().apply {
@@ -179,7 +195,8 @@ class ExampleControllerTest(
             this["longNotNullPositive"] = "0"
             this["bigDecimalDecimalMin"] = "-1"
             this["bigDecimalNotNullDecimalMin"] = "-1"
-            this["emailEmailValid"] = "abcde@"
+            this["emailValid"] = "abcde@"
+            this["phoneValid"] = "010"
         }
 
         When("정상적인 Request를 보낼 때") {
@@ -238,7 +255,8 @@ class ExampleControllerTest(
                 fieldErrors shouldContainKey "bigDecimalNotNullDecimalMin"
                 fieldErrors shouldContainKey "examTypeEnumValid"
                 fieldErrors shouldContainKey "localdateNotNull"
-                fieldErrors shouldContainKey "emailNotBlankEmailValid"
+                fieldErrors shouldContainKey "emailNotBlankValid"
+                fieldErrors shouldContainKey "phoneNotBlankValid"
             }
         }
     }

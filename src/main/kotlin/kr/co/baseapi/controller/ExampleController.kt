@@ -96,7 +96,7 @@ class ExampleController(
     @ApiForExam
     @Operation(summary = "조회 리스트 처리", description = "조회 리스트 처리 설명")
     @GetMapping("/example/list")
-    fun findExampleDslList(@ParameterObject @Valid param: ExamPageParam): List<ExamResult> {
+    fun findExampleDslList(@ParameterObject @Valid param: ExamPageParam): PageResult<ExamResult> {
         return exampleService.findExampleDslList(param)
     }
 

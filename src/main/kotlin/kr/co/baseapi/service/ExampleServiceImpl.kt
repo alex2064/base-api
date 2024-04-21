@@ -101,8 +101,9 @@ class ExampleServiceImpl(
         return result
     }
 
-    override fun findExampleDslList(param: ExamPageParam): List<ExamResult> {
-        val result: List<ExamResult> = exampleRepositorySupport.findByNameList(param)
+    override fun findExampleDslList(param: ExamPageParam): PageResult<ExamResult> {
+        val list: List<ExamResult> = exampleRepositorySupport.findByNameList(param)
+        val result: PageResult<ExamResult> = PageResult.listOf(list)
 
         return result
     }
