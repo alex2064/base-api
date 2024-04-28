@@ -21,13 +21,25 @@ private val log = KotlinLogging.logger {}
  * 2. class 단위의 @Transactional 기본 사용
  * 3. 메서드 단위로 트랜잭션이 필요한 경우 서비스를 따로 빼서 별도로 사용
  * 4. 트랜잭션을 따로 빼는 경우 대상을 추출하는 트랜잭션이 걸리지 않은 class 는 {Target~ServiceImpl}로 생성
- * 5. 메서드 명 사용
+ * 5. 파라미터
+ *      1) 외부 호출 : id(key)
+ *          - 같은 트랜잭션 안이면 id 값으로 영속성 컨텍스트에서 가져오기
+ *          - 다른 트랜잭션이면 select 쿼리 발생
+ *          - 이렇게 해야 상황에 따라 자유롭게 사용하면서 재사용성이 좋음
+ *      2) 내부 호출 : 값 -> entity -> DTO
+ *          - 값 : 바로 사용하는 파라미터(Long, String...), 뭐가 사용되는지 명확해서 가독성이 좋음
+ *          - 엔티티 : 엔티티의 값을 변경해야 하는 경우
+ *          - DTO
+ *          - 값이나 엔티티는 바로 보이지만 DTO 의 경우 정형화되어 있지 않으면 결국 그 안을 봐야 해서 가독성을 떨어뜨림
+ * 6. 메서드 명 사용
  *      1) {find~} : 조회
  *      2) {save~} : 저장
  *      3) {delete~} : 삭제
  *      4) {proc~} : 여러 작업 처리
- *      5) {~Cache} : @Cacheable, @CacheEvict
- *      6) {~CachePut} : CachePut
+ *      5) {valid~} : 유효성 체크(return type : Unit, 유효성 체크 중 문제가 발생하면 throw Exception 으로 처리)
+ *      6) {make~} : key, entity, Dto 생성 작업
+ *      7) {~Cache} : @Cacheable, @CacheEvict
+ *      8) {~CachePut} : @CachePut
  */
 @Transactional
 @Service
