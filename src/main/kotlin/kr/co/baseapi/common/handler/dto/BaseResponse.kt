@@ -1,11 +1,14 @@
 package kr.co.baseapi.common.handler.dto
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import org.springframework.http.ProblemDetail
 import java.time.LocalDateTime
 
 data class BaseResponse<T>(
     val isSuccess: Boolean = false,
+    @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     val beginTime: LocalDateTime,
+    @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     val endTime: LocalDateTime = LocalDateTime.now(),
     val method: String,
     val path: String,
