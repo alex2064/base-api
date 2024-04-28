@@ -9,9 +9,18 @@ import java.util.*
 
 interface ExampleRepositorySupport {
 
+    /**
+     * QueryDsl 로 entity 조회
+     */
     fun findById(id: Long): Optional<Example>
 
+    /**
+     * QueryDsl 로 List 조회
+     */
     fun findByNameList(param: ExamPageParam): List<ExamResult>
 
+    /**
+     * QueryDsl 로 page 조회
+     */
     fun findByNamePage(param: ExamPageParam): PageImpl<ExamResult>
 }
