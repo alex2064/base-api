@@ -59,7 +59,7 @@ class ExampleRepositoryTest(
         val example: Example = exampleRepository.findById(1L).orElseThrow()
 
         When("엔티티의 값을 변경 후 JPQL을 호출할 때") {
-            example.updateInfo("newname", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
+            example.modifyInfo("newname", 10, 100L, BigDecimal.ZERO, GenderType.MAN, false, LocalDate.now())
             val examples: List<Example> = exampleRepository.findByName("newname")
 
             Then("(flush)update, select 순서대로 SQL이 나가고 JPQL로 조회된 List에 처음 주어진 example이 포함되어야 한다.") {

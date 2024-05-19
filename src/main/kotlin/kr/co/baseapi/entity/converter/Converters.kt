@@ -5,6 +5,7 @@ import kr.co.baseapi.common.converter.AbstractEnumTypeConverter
 import kr.co.baseapi.enums.GenderType
 
 /**
+ * GUIDE
  * Converter 생성
  * 1. Entity 에서 사용할 Enum 을 @Converter 로 생성
  * 2. AbstractEnumTypeConverter 상속받아서 사용

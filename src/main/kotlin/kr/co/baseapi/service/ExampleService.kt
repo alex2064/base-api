@@ -42,12 +42,12 @@ interface ExampleService {
     /**
      * QueryDsl 로 List 조회
      */
-    fun findExampleDslList(param: ExamPageParam): PageResult<ExamResult>
+    fun findExampleDslList(param: ExamPageParam): PageResult<ExamResult, Nothing?>
 
     /**
      * QueryDsl 로 page 조회
      */
-    fun findExampleDslPage(param: ExamPageParam): PageResult<ExamResult>
+    fun findExampleDslPage(param: ExamPageParam): PageResult<ExamResult, Nothing?>
 
     /**
      * yml 에 작성된 키 프로퍼티 사용

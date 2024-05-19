@@ -34,7 +34,7 @@ class ExampleTest : BehaviorSpec({
         }
     }
 
-    Given("[updateInfo] Example 엔티티와 수정할 값이 주어지면") {
+    Given("[modifyInfo] Example 엔티티와 수정할 값이 주어지면") {
         val example: Example = Example.of(null, null, null, null, null, null, null)
         val name: String = "kim"
         val age: Int = 35
@@ -44,8 +44,8 @@ class ExampleTest : BehaviorSpec({
         val isAuth: Boolean = true
         val baseDate: LocalDate = LocalDate.now()
 
-        When("updateInfo로 Example 엔티티를 수정할 때") {
-            example.updateInfo(name, age, amount, height, gender, isAuth, baseDate)
+        When("modifyInfo로 Example 엔티티를 수정할 때") {
+            example.modifyInfo(name, age, amount, height, gender, isAuth, baseDate)
 
             Then("값이 올바르게 변경되어야 한다.") {
                 example.name shouldBe name

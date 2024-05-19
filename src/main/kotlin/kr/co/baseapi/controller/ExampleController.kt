@@ -10,13 +10,14 @@ import org.springdoc.core.annotations.ParameterObject
 import org.springframework.web.bind.annotation.*
 
 /**
+ * GUIDE
  * Controller 생성
  * 1. 요청 분류
  *      1) Get : 단순 조회(@ParameterObject @Valid 필수)
  *      2) Post : 개념적으로 해당하는 도메인에 데이터를 새로 생성하는 경우(@RequestBody @Valid 필수)
  *      3) Put : 개념적으로 해당하는 도메인에 ID가 있는 상태에서 수정하는 경우(@RequestBody @Valid 필수, @PathVariable 는 고민해봐야 할 듯)
  *      4) Delete : 개념적으로 해당하는 도메인에 ID가 있는 상태에서 삭제하는 경우(@RequestBody @Valid 필수, @PathVariable 는 고민해봐야 할 듯)
- * 2. URL 은 '/'로 시작, 명사(소문자)로 종료
+ * 2. URL 은 '/'로 시작, 소문자만 사용, 소문자로 종료
  * 3. 파라미터 명 사용
  *      1) {param} : Request 의 DTO
  *      2) {result} : Response 의 DTO
@@ -96,14 +97,14 @@ class ExampleController(
     @ApiForExam
     @Operation(summary = "조회 리스트 처리", description = "조회 리스트 처리 설명")
     @GetMapping("/example/list")
-    fun findExampleDslList(@ParameterObject @Valid param: ExamPageParam): PageResult<ExamResult> {
+    fun findExampleDslList(@ParameterObject @Valid param: ExamPageParam): PageResult<ExamResult, Nothing?> {
         return exampleService.findExampleDslList(param)
     }
 
     @ApiForExam
     @Operation(summary = "조회 페이징 처리", description = "조회 페이징 처리 설명")
     @GetMapping("/example/page")
-    fun findExampleDslPage(@ParameterObject @Valid param: ExamPageParam): PageResult<ExamResult> {
+    fun findExampleDslPage(@ParameterObject @Valid param: ExamPageParam): PageResult<ExamResult, Nothing?> {
         return exampleService.findExampleDslPage(param)
     }
 }

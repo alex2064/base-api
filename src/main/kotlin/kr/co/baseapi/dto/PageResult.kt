@@ -3,7 +3,7 @@ package kr.co.baseapi.dto
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.domain.Page
 
-class PageResult<T> private constructor(
+class PageResult<T, S> private constructor(
     @field:Schema(description = "현재 페이지 번호")
     val pageNumber: Int,
 
@@ -17,23 +17,47 @@ class PageResult<T> private constructor(
     val totalCount: Long,
 
     @field:Schema(description = "현재 페이지의 데이터 리스트")
-    val list: List<T>
+    val list: List<T>,
+
+    @field:Schema(description = "요약")
+    val summary: S
+
 ) {
     companion object {
-        fun <T> pageOf(page: Page<T>): PageResult<T> = PageResult(
+        fun <T> pageOf(page: Page<T>): PageResult<T, Nothing?> = PageResult(
             pageNumber = page.number,
             pageSize = page.size,
             totalPages = page.totalPages,
             totalCount = page.totalElements,
-            list = page.content
+            list = page.content,
+            summary = null
         )
 
-        fun <T> listOf(list: List<T>): PageResult<T> = PageResult(
+        fun <T, S> pageWithSummaryOf(page: Page<T>, summary: S): PageResult<T, S> = PageResult(
+            pageNumber = page.number,
+            pageSize = page.size,
+            totalPages = page.totalPages,
+            totalCount = page.totalElements,
+            list = page.content,
+            summary = summary
+        )
+
+        fun <T> listOf(list: List<T>): PageResult<T, Nothing?> = PageResult(
             pageNumber = 0,
             pageSize = 0,
             totalPages = 0,
             totalCount = list.size.toLong(),
-            list = list
+            list = list,
+            summary = null
+        )
+
+        fun <T, S> listWithSummaryOf(list: List<T>, summary: S): PageResult<T, S> = PageResult(
+            pageNumber = 0,
+            pageSize = 0,
+            totalPages = 0,
+            totalCount = list.size.toLong(),
+            list = list,
+            summary = summary
         )
     }
 }

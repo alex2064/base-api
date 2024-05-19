@@ -9,6 +9,7 @@ import java.time.LocalDate
 
 
 /**
+ * GUIDE
  * Entity 생성
  * 1. class 로 만들기
  * 2. BaseEntity() 상속
@@ -20,7 +21,10 @@ import java.time.LocalDate
  * 8. Boolean 은 YesNoConverter 사용
  * 9. 메서드 명 사용
  *      1) {of, ~Of} : 팩토리 메서드
- *      2) {add~, modify~} : 엔티티 변경 메서드(행동이 나오고 뒤에 이어서 대상이 나오게 메서드명 사용)
+ *      2) {add~} : 엔티티 변경 메서드(행동이 나오고 뒤에 이어서 대상이 나오게 메서드명 사용)
+ *      3) {reset~} : 초기화
+ *      4) {modify~} : 단순 수정
+ *      5) {update~} : 전문 결과 수정
  */
 @Entity
 @Table(schema = "dev", name = "EXAMPLE")
@@ -63,7 +67,7 @@ class Example protected constructor() : BaseEntity() {
         protected set
 
 
-    fun updateInfo(
+    fun modifyInfo(
         name: String?,
         age: Int?,
         amount: Long?,

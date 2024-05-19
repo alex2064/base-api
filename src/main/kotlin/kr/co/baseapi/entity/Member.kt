@@ -66,7 +66,7 @@ class Member private constructor(
     }
 
 
-    fun updateInfo(name: String?, birthDate: LocalDate?, gender: GenderType?, email: String?) {
+    fun modifyInfo(name: String?, birthDate: LocalDate?, gender: GenderType?, email: String?) {
         this.name = name
         this.birthDate = birthDate
         this.gender = gender

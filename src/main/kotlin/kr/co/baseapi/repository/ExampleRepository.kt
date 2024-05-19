@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query
 import java.util.*
 
 /**
+ * GUIDE
  * Repository 생성
  * 1. JpaRepository 구현
  * 2. 하나의 kt 파일 안에 여러 엔티티들의 Repository 를 작성

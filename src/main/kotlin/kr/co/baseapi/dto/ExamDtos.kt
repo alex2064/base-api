@@ -16,6 +16,7 @@ import java.time.LocalDate
 
 
 /**
+ * GUIDE
  * DTO 생성
  * 1. data class(주 생성자 + val + null 허용) 로 만들기
  * 2. Spring validation 으로 유효성 체크
@@ -29,12 +30,16 @@ import java.time.LocalDate
  *      8) Phone 타입 : @PhoneValid, @NotBlank
  * 3. @Schema 필수
  * 4. Paging 처리가 필요한 요청은 PageParam() 상속
- * 5. 주 생성자와 팩토리 메서드 둘 다 사용
+ * 5. QueryDsl 로 조회한 결과 DTO 도 client 에 보낼때는 Response 용 DTO 호 변환해서 사용
+ * 6. 주 생성자와 팩토리 메서드 둘 다 사용
  *      1) 주 생성자 : 값을 그대로 사용해서 인스턴스를 만드는 경우
  *      2) 팩토리 메서드 : 값을 그대로 사용 안하고 setter 로 뽑거나 가공 처리하고 인스턴스를 만드는 경우
- * 6. 클래스 명 사용
+ * 7. 클래스 명 사용
  *      1) {~Param} : Request DTO
  *      2) {~Result} : Response DTO
+ *      3) {~FeignParam} : OpenFeign 에 사용되는 Request DTO
+ *      4) {~FeignResult} : OpenFeign 에 사용되는 Response DTO
+ *      5) {~Dto} : QueryDsl 등 어플리케이션 내부적으로 사용하는 DTO
  */
 data class ExamVaildParam(
 

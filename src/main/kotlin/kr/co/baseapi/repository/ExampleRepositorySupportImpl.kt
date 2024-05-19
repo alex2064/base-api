@@ -15,14 +15,16 @@ import java.util.*
 
 
 /**
+ * GUIDE
  * RepositorySupport 생성
  * 1. JPAQueryFactory 주입받아 사용
  * 2. 조회 조건이 많은 SQL, Join, Page 처리가 필요한 select 만 QueryDSL 로 사용
  * 3. select 의 return type 은 Optional<>, List<>, PageImpl<> 로 통일
- * 4. 메서드 명 사용
+ * 4. override 된 메서드는 Interface 에 간략한 주석, 내부 메서드는 해당 메서드 위에 간단한 주석
+ * 5. 메서드 명 사용
  *      1) {~Page} : paging 처리
  *      2) JPA Query Methods 와 최대한 비슷하게 함수명 사용({find~}, {By~})
- * 5. paging 처리 순서
+ * 6. paging 처리 순서
  *      1. PageParam() 상속받은 DTO 파라미터로 받기
  *      2. 사용할 entity 나열
  *      3. pageable 추출
@@ -70,6 +72,7 @@ class ExampleRepositorySupportImpl(
             )
             .from(example)
             .where(booleanBuilder)
+            .orderBy(example.id.asc())
             .fetch()
     }
 
@@ -86,7 +89,10 @@ class ExampleRepositorySupportImpl(
             .and(example.isAuth.eq(true))
 
         // 공통 query
-        val query: JPAQuery<Example> = jpaQueryFactory.selectFrom(example).where(booleanBuilder)
+        val query: JPAQuery<Example> = jpaQueryFactory
+            .selectFrom(example)
+            .where(booleanBuilder)
+            .orderBy(example.id.asc())
 
         // content
         val content: MutableList<ExamResult> =
