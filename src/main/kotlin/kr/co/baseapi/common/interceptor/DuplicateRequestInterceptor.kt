@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
 import java.lang.Exception
 import java.time.Duration
-import java.time.LocalDateTime
 
 private val log = KotlinLogging.logger {}
 
@@ -19,7 +18,7 @@ class DuplicateRequestInterceptor(
 ) : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        val requestKey: String = createRequestKey(request)
+        val requestKey: String = makeRequestKey(request)
         val isSet: Boolean = stringRedisTemplate
             .opsForValue()
             .setIfAbsent(requestKey, "ING", Duration.ofMinutes(1L))
@@ -43,11 +42,11 @@ class DuplicateRequestInterceptor(
         handler: Any,
         ex: Exception?
     ) {
-        val requestKey: String = createRequestKey(request)
+        val requestKey: String = makeRequestKey(request)
         stringRedisTemplate.delete(requestKey)
     }
 
-    private fun createRequestKey(request: HttpServletRequest): String {
+    private fun makeRequestKey(request: HttpServletRequest): String {
         val remoteAddr: String = request.remoteAddr
         val method: String = request.method
         val requestURI: String = request.requestURI

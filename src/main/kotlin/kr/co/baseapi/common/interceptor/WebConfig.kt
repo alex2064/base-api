@@ -9,13 +9,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 @Configuration
 class WebConfig(
     private val requestInterceptor: RequestInterceptor,
-    private val duplicateRequestInterceptor: DuplicateRequestInterceptor,
+//    private val duplicateRequestInterceptor: DuplicateRequestInterceptor,
     private val stringToEnumTypeConverterFactory: StringToEnumTypeConverterFactory
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(requestInterceptor)
-        registry.addInterceptor(duplicateRequestInterceptor)
+//        registry.addInterceptor(duplicateRequestInterceptor)
     }
 
     override fun addFormatters(registry: FormatterRegistry) {
