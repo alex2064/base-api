@@ -8,6 +8,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.maps.shouldContainKey
 import io.kotest.matchers.shouldBe
 import io.mockk.every
+import kr.co.baseapi.common.converter.StringToEnumTypeConverterFactory
 import kr.co.baseapi.common.handler.dto.BaseResponse
 import kr.co.baseapi.common.interceptor.WebConfig
 import kr.co.baseapi.dto.ExamParam
@@ -31,12 +32,7 @@ import java.nio.charset.StandardCharsets
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-@WebMvcTest(
-    controllers = [ExampleController::class],
-    excludeFilters = [
-        ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = [WebConfig::class])
-    ]
-)
+@WebMvcTest(ExampleController::class, StringToEnumTypeConverterFactory::class)
 class ExampleControllerTest(
     private val mockMvc: MockMvc,
     private val objectMapper: ObjectMapper,
@@ -46,7 +42,7 @@ class ExampleControllerTest(
 
     Given("[GET][/exam/vaild] vaildation 검증할 값이 주어지면") {
         val path: String = "/exam/valid"
-        val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
 
         val string: String = "string"
         val stringNotBlank: String = "string"

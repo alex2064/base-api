@@ -15,7 +15,7 @@ annotation class PhoneValid(
     val message: String = "올바른 형식의 휴대전화 번호여야 합니다.",
     val groups: Array<KClass<*>> = [],
     val payload: Array<KClass<out Payload>> = [],
-    val regexp: String = "^01(?:0|1|[6-9])(\\\\d{3}|\\\\d{4})\\\\d{4}\$",
+    val regexp: String = "^01(?:0|1|[6-9])(\\d{3}|\\d{4})\\d{4}\$",
     val flags: Array<Pattern.Flag> = []
 )
 

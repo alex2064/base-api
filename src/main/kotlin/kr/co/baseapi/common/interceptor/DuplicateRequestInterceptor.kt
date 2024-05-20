@@ -12,7 +12,7 @@ import java.time.Duration
 
 private val log = KotlinLogging.logger {}
 
-@Component
+//@Component
 class DuplicateRequestInterceptor(
     private val stringRedisTemplate: StringRedisTemplate
 ) : HandlerInterceptor {

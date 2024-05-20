@@ -151,7 +151,7 @@ class ExampleServiceImplTest(
                 PageImpl<ExamResult>(mutableListOf(), PageRequest.of(0, 20), 0L)
 
         When("DTO로 example을 찾을 때") {
-            val result: PageResult<ExamResult> = exampleService.findExampleDslPage(param)
+            val result: PageResult<ExamResult, Nothing?> = exampleService.findExampleDslPage(param)
 
             Then("페이징 처리된 빈 result DTO가 나와야 한다.") {
                 result.pageNumber shouldBe 0
