@@ -1,15 +1,3 @@
-```kotlin
-enum class LockType(
-    val objectType: String,
-    val desc: String,
-    val keyName: String?
-) {
-    /* 예시 enum */
-    APPLICATION("application", "신청", "userId"),
-    CANCEL("cancel", "취소", "userId"),
-    PROC("proc", "일괄작업", null);
-}
-```
 > 이것은 인용구입니다.
 
 # base-api
@@ -21,7 +9,7 @@ enum class LockType(
 
 ---
 
-## 기술스택
+## 기술 스택
 - Kotlin 1.9.22 (JAVA 17)
 - Spring Boot 3.2.2
 - Undertow
@@ -89,7 +77,7 @@ base-api
   │ │ └── BaseApiApplication.kt
   │ └── resources
   │   └── config
-  └── test              -> kotest, BDD, mockk를 활용한 테스트 코드
+  └── test              -> kotest(BDD), mockk를 활용한 테스트 코드
     ├── kotlin.kr.co.baseapi
     │ ├── common
     │ ├── controller
@@ -104,10 +92,81 @@ base-api
 
 ## 컨벤션
 - 각 파일별로 `GUIDE` 작성
-- TODO 에 GUIDE 로 검색시 확인 가능
+- TODO 나 소스에 GUIDE 로 검색시 확인 가능
 
 ---
 
-## 코드 설명
+## 설명
 
-### ㅁㅁㅁ
+### 1. Converter
+Database 에 저장되어있는 코드값과 Enum 값을 서로 변환
+
+#### <관련 코드>
+##### `kr.co.baseapi.common.converter.ConvertType`
+Converter 를 생성해줄 Enum에 구현해줄 인터페이스
+
+##### `kr.co.baseapi.common.converter.AbstractEnumTypeConverter`
+DB Code와 Enum 변환 추상클래스
+
+##### `kr.co.baseapi.common.util.EnumUtil`
+Enum 에서 값 기준으로 해당 Enum을 찾는 object
+
+##### `kr.co.baseapi.entity.converter.GenderTypeConverter`
+AbstractEnumTypeConverter 를 상속받아 Entity에 걸어줄 Converter
+
+
+#### <사용 방법>
+
+##### 1) 적용할 Enum에 ConvertType 구현
+
+```kotlin
+enum class GenderType(
+    override val code: String,
+    override val desc: String
+) : ConvertType {
+
+    MAN("man", "남자"),
+    WOMAN("woman", "여자");
+
+    companion object {
+        @JvmStatic
+        @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+        fun get(name: String?): GenderType? = EnumUtil.getEnumByNameOrCode(GenderType::class.java, name)
+    }
+}
+```
+
+##### 2) AbstractEnumTypeConverter 를 상속받은 @Converter 생성
+
+```kotlin
+@Converter
+class GenderTypeConverter : AbstractEnumTypeConverter<GenderType>(GenderType::class.java)
+```
+
+##### 3) Entity에 Converter 적용
+
+```kotlin
+@Entity
+@Table(schema = "dev", name = "EXAMPLE")
+class Example protected constructor() : BaseEntity() {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    var id: Long? = null
+        protected set
+
+    @Convert(converter = GenderTypeConverter::class)
+    @Column(name = "GENDER")
+    var gender: GenderType? = null
+        protected set
+
+    companion object {
+        fun of(
+            gender: GenderType?,
+        ): Example = Example().apply {
+            this.gender = gender
+        }
+    }
+}
+```
