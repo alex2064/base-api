@@ -103,23 +103,23 @@ Database 에 저장되어있는 코드값과 Enum 값을 서로 변환
 
 #### <관련 코드>
 
-##### `kr.co.baseapi.common.converter.ConvertType`
+#### `kr.co.baseapi.common.converter.ConvertType`
 Converter 를 생성해줄 Enum에 구현해줄 인터페이스
 
-##### `kr.co.baseapi.common.converter.AbstractEnumTypeConverter`
+#### `kr.co.baseapi.common.converter.AbstractEnumTypeConverter`
 DB Code와 Enum 변환 추상클래스
 
-##### `kr.co.baseapi.common.util.EnumUtil`
+#### `kr.co.baseapi.common.util.EnumUtil`
 Enum 에서 값 기준으로 해당 Enum을 찾는 object
 
-##### `kr.co.baseapi.entity.converter.GenderTypeConverter`
+#### `kr.co.baseapi.entity.converter.GenderTypeConverter`
 AbstractEnumTypeConverter 를 상속받아 Entity에 걸어줄 Converter
 
 <br/>
 
 #### <사용 방법>
 
-##### 1) 적용할 Enum에 ConvertType 구현
+#### 1) 적용할 Enum에 ConvertType 구현
 
 - name : Kotlin code 에서 사용할 Enum 이름
 - code : Database 에 저장할 Code 값
@@ -142,14 +142,14 @@ enum class GenderType(
 }
 ```
 
-##### 2) AbstractEnumTypeConverter 를 상속받은 @Converter 생성
+#### 2) AbstractEnumTypeConverter 를 상속받은 @Converter 생성
 
 ```kotlin
 @Converter
 class GenderTypeConverter : AbstractEnumTypeConverter<GenderType>(GenderType::class.java)
 ```
 
-##### 3) Entity에 Converter 적용
+#### 3) Entity에 Converter 적용
 
 ```kotlin
 @Entity
@@ -186,7 +186,7 @@ Redis에 Key를 등록해서 동시 요청 처리
 
 #### <관련 코드>
 
-##### `kr.co.baseapi.common.redis.annotation.RedisLock`
+#### `kr.co.baseapi.common.redis.annotation.RedisLock`
 동시 요청 처리할 함수에 걸어줄 Annotation
 
 #### `kr.co.baseapi.common.redis.component.RedisLockManager`
@@ -202,7 +202,7 @@ Lock object-type 관리하는 Enum
 
 #### <사용 방법>
 
-##### 1) 필요한 object-type Enum 에 정의
+#### 1) 필요한 object-type Enum 에 정의
 
 - objectType : Redis에 저장할때 사용할 object-type(object-type:id 를 keyName으로 사용)
 - desc : Enum 에 대한 설명(개발시 참고용)
@@ -219,7 +219,7 @@ enum class LockType(
 }
 ```
 
-##### 2) 동시 요청을 처리할 함수에 @RedisLock 적용
+#### 2) 동시 요청을 처리할 함수에 @RedisLock 적용
 
 ```kotlin
 @RedisLock(LockType.FIND)
@@ -240,17 +240,17 @@ MQ 사용 예시
 
 #### <관련 코드>
 
-##### `kr.co.baseapi.common.mq.RabbitConfig`
+#### `kr.co.baseapi.common.mq.RabbitConfig`
 RabbitMQ 설정
 
-##### `kr.co.baseapi.common.handler.MessageQueueErrorHandler`
+#### `kr.co.baseapi.common.handler.MessageQueueErrorHandler`
 MessageQueue Error Handler, 3번 재시도 후 DEAD LETTER QUEUE 로 이동
 
 <br/>
 
 #### <사용 방법>
 
-##### 1) Message를 보낼 Producer 정의
+#### 1) Message를 보낼 Producer 정의
 
 - exchange -> routing 보고 queue 선택
 
@@ -269,7 +269,7 @@ class MessageSender(
 }
 ```
 
-##### 2) Message를 받아 처리할 Consumer 정의
+#### 2) Message를 받아 처리할 Consumer 정의
 
 ```kotlin
 @Component
@@ -312,17 +312,17 @@ class MessageReceiver {
 
 #### <관련 코드>
 
-##### `kr.co.baseapi.dto.PageParam`
+#### `kr.co.baseapi.dto.PageParam`
 pageNumber, pageSize를 받아 Pageable 생성하는 추상클래스, 요청받는 DTO에 상속
 
-##### `kr.co.baseapi.dto.PageResult`
+#### `kr.co.baseapi.dto.PageResult`
 List 형태의 결과값을 Response에 보낼때 사용하는 클래스(summary, Page는 팩토리 함수로 분류해서 처리)
 
 <br/>
 
 #### <사용 방법>
 
-##### paging 처리 순서
+#### paging 처리 순서
 1. PageParam() 상속받은 DTO 파라미터로 받기
 2. 사용할 entity 나열
 3. pageable 추출
@@ -331,7 +331,7 @@ List 형태의 결과값을 Response에 보낼때 사용하는 클래스(summary
 6. total query fetchOne
 7. PageImpl 생성 / return
 
-##### 1) 페이지 처리 요청 받을 DTO에 PageParam 상속
+#### 1) 페이지 처리 요청 받을 DTO에 PageParam 상속
 
 ```kotlin
 data class ExamPageParam(
@@ -342,7 +342,7 @@ data class ExamPageParam(
 ) : PageParam()
 ```
 
-##### 2) Controller에 @Valid 로 유효성 체크
+#### 2) Controller에 @Valid 로 유효성 체크
 
 ```kotlin
 @Tag(name = "예시 controller")
@@ -360,7 +360,7 @@ class ExampleController(
 }
 ```
 
-##### 3) Querydsl에서 페이지 처리
+#### 3) Querydsl에서 페이지 처리
 
 ```kotlin
 override fun findByNamePage(param: ExamPageParam): PageImpl<ExamResult> {
@@ -409,7 +409,7 @@ override fun findByNamePage(param: ExamPageParam): PageImpl<ExamResult> {
     }
 ```
 
-##### 4) 페이지 처리해야하는 함수에서 PageResult 팩토리 함수로 Response 생성
+#### 4) 페이지 처리해야하는 함수에서 PageResult 팩토리 함수로 Response 생성
 
 ```kotlin
 override fun findExampleDslPage(param: ExamPageParam): PageResult<ExamResult, Nothing?> {
