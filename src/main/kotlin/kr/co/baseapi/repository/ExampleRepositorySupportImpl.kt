@@ -4,6 +4,7 @@ import com.querydsl.core.BooleanBuilder
 import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQuery
 import com.querydsl.jpa.impl.JPAQueryFactory
+import kr.co.baseapi.dto.ExamDto
 import kr.co.baseapi.dto.ExamPageParam
 import kr.co.baseapi.dto.ExamResult
 import kr.co.baseapi.entity.Example
@@ -76,7 +77,7 @@ class ExampleRepositorySupportImpl(
             .fetch()
     }
 
-    override fun findByNamePage(param: ExamPageParam): PageImpl<ExamResult> {
+    override fun findByNamePage(param: ExamPageParam): PageImpl<ExamDto> {
         // entity
         val example: QExample = QExample.example
 
@@ -95,11 +96,11 @@ class ExampleRepositorySupportImpl(
             .orderBy(example.id.asc())
 
         // content
-        val content: MutableList<ExamResult> =
+        val content: MutableList<ExamDto> =
             query.clone()
                 .select(
                     Projections.constructor(
-                        ExamResult::class.java,
+                        ExamDto::class.java,
                         example.id,
                         example.name,
                         example.age,
@@ -117,6 +118,6 @@ class ExampleRepositorySupportImpl(
         // total
         val total: Long = query.clone().select(example.id.count()).fetchOne() ?: 0L
 
-        return PageImpl<ExamResult>(content, pageable, total)
+        return PageImpl<ExamDto>(content, pageable, total)
     }
 }

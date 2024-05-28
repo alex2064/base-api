@@ -130,8 +130,8 @@ class ExampleServiceImpl(
     }
 
     override fun findExampleDslPage(param: ExamPageParam): PageResult<ExamResult, Nothing?> {
-        val page: Page<ExamResult> = exampleRepositorySupport.findByNamePage(param)
-        val result: PageResult<ExamResult, Nothing?> = PageResult.pageOf(page)
+        val page: Page<ExamDto> = exampleRepositorySupport.findByNamePage(param)
+        val result: PageResult<ExamResult, Nothing?> = PageResult.pageOf(page, ExamResult::examDtoOf)
 
         return result
     }
