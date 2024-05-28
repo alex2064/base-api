@@ -163,6 +163,34 @@ data class ExamParam(
     val baseDate: LocalDate?
 )
 
+
+data class ExamDto(
+    @field:Schema(description = "ID")
+    val id: Long?,
+
+    @field:Schema(description = "이름")
+    val name: String?,
+
+    @field:Schema(description = "나이")
+    val age: Int?,
+
+    @field:Schema(description = "금액")
+    val amount: Long?,
+
+    @field:Schema(description = "키")
+    val height: BigDecimal?,
+
+    @field:Schema(description = "성별")
+    val gender: GenderType?,
+
+    @field:Schema(description = "인증여부")
+    val isAuth: Boolean?,
+
+    @field:Schema(description = "기준일")
+    val baseDate: LocalDate?
+)
+
+
 data class ExamResult(
     @field:Schema(description = "ID")
     @field:NotNull
@@ -211,6 +239,18 @@ data class ExamResult(
                 gender = example.gender,
                 isAuth = example.isAuth,
                 baseDate = example.baseDate
+            )
+
+        fun examDtoOf(dto: ExamDto): ExamResult =
+            ExamResult(
+                id = dto.id,
+                name = dto.name,
+                age = dto.age,
+                amount = dto.amount,
+                height = dto.height,
+                gender = dto.gender,
+                isAuth = dto.isAuth,
+                baseDate = dto.baseDate
             )
     }
 }
