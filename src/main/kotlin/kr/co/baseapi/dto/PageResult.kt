@@ -33,12 +33,30 @@ class PageResult<T, S> private constructor(
             summary = null
         )
 
+        fun <T, U> pageOf(page: Page<U>, converter: (U) -> T): PageResult<T, Nothing?> = PageResult(
+            pageNumber = page.number,
+            pageSize = page.size,
+            totalPages = page.totalPages,
+            totalCount = page.totalElements,
+            list = page.content.map(converter),
+            summary = null
+        )
+
         fun <T, S> pageWithSummaryOf(page: Page<T>, summary: S): PageResult<T, S> = PageResult(
             pageNumber = page.number,
             pageSize = page.size,
             totalPages = page.totalPages,
             totalCount = page.totalElements,
             list = page.content,
+            summary = summary
+        )
+
+        fun <T, S, U> pageWithSummaryOf(page: Page<U>, summary: S, converter: (U) -> T): PageResult<T, S> = PageResult(
+            pageNumber = page.number,
+            pageSize = page.size,
+            totalPages = page.totalPages,
+            totalCount = page.totalElements,
+            list = page.content.map(converter),
             summary = summary
         )
 
@@ -51,12 +69,30 @@ class PageResult<T, S> private constructor(
             summary = null
         )
 
+        fun <T, U> listOf(list: List<U>, converter: (U) -> T): PageResult<T, Nothing?> = PageResult(
+            pageNumber = 0,
+            pageSize = 0,
+            totalPages = 0,
+            totalCount = list.size.toLong(),
+            list = list.map(converter),
+            summary = null
+        )
+
         fun <T, S> listWithSummaryOf(list: List<T>, summary: S): PageResult<T, S> = PageResult(
             pageNumber = 0,
             pageSize = 0,
             totalPages = 0,
             totalCount = list.size.toLong(),
             list = list,
+            summary = summary
+        )
+
+        fun <T, S, U> listWithSummaryOf(list: List<U>, summary: S, converter: (U) -> T): PageResult<T, S> = PageResult(
+            pageNumber = 0,
+            pageSize = 0,
+            totalPages = 0,
+            totalCount = list.size.toLong(),
+            list = list.map(converter),
             summary = summary
         )
     }
