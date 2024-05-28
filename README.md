@@ -363,58 +363,113 @@ class ExampleController(
 #### 3) Querydsl에서 페이지 처리
 
 ```kotlin
-override fun findByNamePage(param: ExamPageParam): PageImpl<ExamResult> {
-        // 2. 사용할 entity 나열
-        val example: QExample = QExample.example
+override fun findByNamePage(param: ExamPageParam): PageImpl<ExamDto> {
+    // 2. 사용할 entity 나열
+    val example: QExample = QExample.example
 
-        // 3. pageable 추출
-        val pageable: Pageable = param.pageable!!
+    // 3. pageable 추출
+    val pageable: Pageable = param.pageable!!
 
-        // where 조건
-        val booleanBuilder: BooleanBuilder = BooleanBuilder()
-            .and(example.name.contains(param.name))
-            .and(example.isAuth.eq(true))
+    // where 조건
+    val booleanBuilder: BooleanBuilder = BooleanBuilder()
+        .and(example.name.contains(param.name))
+        .and(example.isAuth.eq(true))
 
-        // 4. 공통 query 생성(BooleanBuilder, JPAQuery)
-        val query: JPAQuery<Example> = jpaQueryFactory
-            .selectFrom(example)
-            .where(booleanBuilder)
-            .orderBy(example.id.asc())
+    // 4. 공통 query 생성(BooleanBuilder, JPAQuery)
+    val query: JPAQuery<Example> = jpaQueryFactory
+        .selectFrom(example)
+        .where(booleanBuilder)
+        .orderBy(example.id.asc())
 
-        // 5. content query fetch
-        val content: MutableList<ExamResult> =
-            query.clone()
-                .select(
-                    Projections.constructor(
-                        ExamResult::class.java,
-                        example.id,
-                        example.name,
-                        example.age,
-                        example.amount,
-                        example.height,
-                        example.gender,
-                        example.isAuth,
-                        example.baseDate
-                    )
+    // 5. content query fetch
+    val content: MutableList<ExamDto> =
+        query.clone()
+            .select(
+                Projections.constructor(
+                    ExamDto::class.java,
+                    example.id,
+                    example.name,
+                    example.age,
+                    example.amount,
+                    example.height,
+                    example.gender,
+                    example.isAuth,
+                    example.baseDate
                 )
-                .offset(pageable.offset)
-                .limit(pageable.pageSize.toLong())
-                .fetch()
+            )
+            .offset(pageable.offset)
+            .limit(pageable.pageSize.toLong())
+            .fetch()
 
-        // 6. total query fetchOne
-        val total: Long = query.clone().select(example.id.count()).fetchOne() ?: 0L
+    // 6. total query fetchOne
+    val total: Long = query.clone().select(example.id.count()).fetchOne() ?: 0L
 
-        // 7. PageImpl 생성 / return
-        return PageImpl<ExamResult>(content, pageable, total)
-    }
+    // 7. PageImpl 생성 / return
+    return PageImpl<ExamDto>(content, pageable, total)
+}
 ```
 
-#### 4) 페이지 처리해야하는 함수에서 PageResult 팩토리 함수로 Response 생성
+#### 4) 형 변환을 해줄 팩토리 함수 생성
+```kotlin
+data class ExamResult(
+    @field:Schema(description = "ID")
+    @field:NotNull
+    @field:Positive
+    val id: Long?,
+
+    @field:Schema(description = "이름")
+    @field:NotBlank
+    val name: String?,
+
+    @field:Schema(description = "나이")
+    @field:NotNull
+    @field:Positive
+    val age: Int?,
+
+    @field:Schema(description = "금액")
+    @field:NotNull
+    @field:Positive
+    val amount: Long?,
+
+    @field:Schema(description = "키")
+    @field:NotNull
+    @field:DecimalMin(value = "0.0")
+    val height: BigDecimal?,
+
+    @field:Schema(description = "성별")
+    @field:EnumValid(enumClass = GenderType::class)
+    val gender: GenderType?,
+
+    @field:Schema(description = "인증여부")
+    @field:NotNull
+    val isAuth: Boolean?,
+
+    @field:Schema(description = "기준일")
+    @field:NotNull
+    val baseDate: LocalDate?
+) {
+    companion object {
+        fun examDtoOf(dto: ExamDto): ExamResult =
+            ExamResult(
+                id = dto.id,
+                name = dto.name,
+                age = dto.age,
+                amount = dto.amount,
+                height = dto.height,
+                gender = dto.gender,
+                isAuth = dto.isAuth,
+                baseDate = dto.baseDate
+            )
+    }
+}
+```
+
+#### 5) 페이지 처리해야하는 함수에서 PageResult 팩토리 함수로 Response 생성
 
 ```kotlin
 override fun findExampleDslPage(param: ExamPageParam): PageResult<ExamResult, Nothing?> {
-    val page: Page<ExamResult> = exampleRepositorySupport.findByNamePage(param)
-    val result: PageResult<ExamResult, Nothing?> = PageResult.pageOf(page)
+    val page: Page<ExamDto> = exampleRepositorySupport.findByNamePage(param)
+    val result: PageResult<ExamResult, Nothing?> = PageResult.pageOf(page, ExamResult::examDtoOf)
 
     return result
 }
