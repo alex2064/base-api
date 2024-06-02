@@ -6,7 +6,6 @@ import com.querydsl.jpa.impl.JPAQuery
 import com.querydsl.jpa.impl.JPAQueryFactory
 import kr.co.baseapi.dto.ExamDto
 import kr.co.baseapi.dto.ExamPageParam
-import kr.co.baseapi.dto.ExamResult
 import kr.co.baseapi.entity.Example
 import kr.co.baseapi.entity.QExample
 import org.springframework.data.domain.PageImpl
@@ -50,7 +49,7 @@ class ExampleRepositorySupportImpl(
         )
     }
 
-    override fun findByNameList(param: ExamPageParam): List<ExamResult> {
+    override fun findByNameList(param: ExamPageParam): List<ExamDto> {
         val example: QExample = QExample.example
 
         val booleanBuilder: BooleanBuilder = BooleanBuilder()
@@ -60,7 +59,7 @@ class ExampleRepositorySupportImpl(
         return jpaQueryFactory
             .select(
                 Projections.constructor(
-                    ExamResult::class.java,
+                    ExamDto::class.java,
                     example.id,
                     example.name,
                     example.age,
