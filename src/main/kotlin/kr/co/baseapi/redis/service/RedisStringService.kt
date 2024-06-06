@@ -3,7 +3,7 @@ package kr.co.baseapi.redis.service
 interface RedisStringService {
 
     /**
-     * 캐싱 예제
+     * 캐싱
      * 데이터베이스에서 자주 조회되는 데이터를 Redis에 캐시하여 성능을 향상
      */
     fun findUserInfo(userId: Long): String

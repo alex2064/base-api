@@ -26,7 +26,7 @@ class RedisStringServiceImpl(
             val dbValue: String = ""
 
             // ttl 1분으로 데이터 저장
-            stringRedisTemplate.opsForValue().set(key, dbValue, java.time.Duration.ofMinutes(1L))
+            stringRedisTemplate.opsForValue().set(key, dbValue, Duration.ofMinutes(1L))
             dbValue
         }
     }
