@@ -75,6 +75,6 @@ class RedisListServiceImpl(
         val key: String = makeOrderLoginIdIdKey(loginId)
         val result: List<String> = stringRedisTemplate.opsForList().range(key, 0, -1) ?: emptyList()
 
-        return result.mapNotNull { it as? Long }
+        return result.map { it.toLong() }
     }
 }
